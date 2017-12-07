@@ -25,7 +25,6 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.AutoInjectCheckbox = new System.Windows.Forms.CheckBox();
-            this.SoundsCheckbox = new System.Windows.Forms.CheckBox();
             this.CloseAfterInjectionCheckbox = new System.Windows.Forms.CheckBox();
             this.SaveDLLCheckbox = new System.Windows.Forms.CheckBox();
             this.SaveProcessCheckbox = new System.Windows.Forms.CheckBox();
@@ -42,16 +41,6 @@
             this.AutoInjectCheckbox.Text = "Automatically Inject";
             this.AutoInjectCheckbox.UseVisualStyleBackColor = true;
             // 
-            // SoundsCheckbox
-            // 
-            this.SoundsCheckbox.AutoSize = true;
-            this.SoundsCheckbox.Location = new System.Drawing.Point(12, 58);
-            this.SoundsCheckbox.Name = "SoundsCheckbox";
-            this.SoundsCheckbox.Size = new System.Drawing.Size(85, 17);
-            this.SoundsCheckbox.TabIndex = 1;
-            this.SoundsCheckbox.Text = "Play Sounds";
-            this.SoundsCheckbox.UseVisualStyleBackColor = true;
-            // 
             // CloseAfterInjectionCheckbox
             // 
             this.CloseAfterInjectionCheckbox.AutoSize = true;
@@ -65,7 +54,7 @@
             // SaveDLLCheckbox
             // 
             this.SaveDLLCheckbox.AutoSize = true;
-            this.SaveDLLCheckbox.Location = new System.Drawing.Point(12, 81);
+            this.SaveDLLCheckbox.Location = new System.Drawing.Point(12, 58);
             this.SaveDLLCheckbox.Name = "SaveDLLCheckbox";
             this.SaveDLLCheckbox.Size = new System.Drawing.Size(118, 17);
             this.SaveDLLCheckbox.TabIndex = 3;
@@ -75,7 +64,7 @@
             // SaveProcessCheckbox
             // 
             this.SaveProcessCheckbox.AutoSize = true;
-            this.SaveProcessCheckbox.Location = new System.Drawing.Point(12, 104);
+            this.SaveProcessCheckbox.Location = new System.Drawing.Point(12, 81);
             this.SaveProcessCheckbox.Name = "SaveProcessCheckbox";
             this.SaveProcessCheckbox.Size = new System.Drawing.Size(123, 17);
             this.SaveProcessCheckbox.TabIndex = 4;
@@ -84,7 +73,7 @@
             // 
             // CloseBtn
             // 
-            this.CloseBtn.Location = new System.Drawing.Point(12, 127);
+            this.CloseBtn.Location = new System.Drawing.Point(12, 104);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(169, 23);
             this.CloseBtn.TabIndex = 5;
@@ -95,12 +84,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(193, 157);
+            this.ClientSize = new System.Drawing.Size(193, 138);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.SaveProcessCheckbox);
             this.Controls.Add(this.SaveDLLCheckbox);
             this.Controls.Add(this.CloseAfterInjectionCheckbox);
-            this.Controls.Add(this.SoundsCheckbox);
             this.Controls.Add(this.AutoInjectCheckbox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -114,7 +102,6 @@
         #endregion
 
         private System.Windows.Forms.CheckBox AutoInjectCheckbox;
-        private System.Windows.Forms.CheckBox SoundsCheckbox;
         private System.Windows.Forms.CheckBox CloseAfterInjectionCheckbox;
         private System.Windows.Forms.CheckBox SaveDLLCheckbox;
         private System.Windows.Forms.CheckBox SaveProcessCheckbox;

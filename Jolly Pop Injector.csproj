@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DLLInjector.cs" />
+    <Compile Include="FormHandler.cs" />
     <Compile Include="Mainform.cs">
       <SubType>Form</SubType>
     </Compile>

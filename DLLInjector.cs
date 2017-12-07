@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Jolly_Pop_Injector {
-    class DLLInjector {
+    public class DLLInjector {
+
     }
 }
