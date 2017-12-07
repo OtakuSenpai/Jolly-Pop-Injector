@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Jolly_Pop_Injector {
-    public partial class Form1 : Form {
-        public Form1() {
+    public partial class Mainform : Form {
+        public Mainform() {
             InitializeComponent();
         }
     }
