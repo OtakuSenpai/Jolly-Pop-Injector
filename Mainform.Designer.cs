@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -35,6 +36,8 @@
             this.SettingsBtn = new System.Windows.Forms.Button();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.GithubLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.StatusTimer = new System.Windows.Forms.Timer(this.components);
+            this.AutoInjectTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -142,6 +145,14 @@
             this.GithubLinkLabel.TabStop = true;
             this.GithubLinkLabel.Text = "https://github.com/AWilliams17/Jolly-Pop-Injector";
             // 
+            // StatusTimer
+            // 
+            this.StatusTimer.Enabled = true;
+            // 
+            // AutoInjectTimer
+            // 
+            this.AutoInjectTimer.Enabled = true;
+            // 
             // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -183,6 +194,8 @@
         private System.Windows.Forms.Button SettingsBtn;
         private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.LinkLabel GithubLinkLabel;
+        private System.Windows.Forms.Timer StatusTimer;
+        private System.Windows.Forms.Timer AutoInjectTimer;
     }
 }
 
