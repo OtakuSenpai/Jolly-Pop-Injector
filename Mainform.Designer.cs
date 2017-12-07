@@ -177,6 +177,7 @@
             this.MinimizeBox = false;
             this.Name = "Mainform";
             this.Text = "Jolly-Pop Injector: It\'s a DLL Injector";
+            this.Load += new System.EventHandler(this.Mainform_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
