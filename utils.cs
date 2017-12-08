@@ -1,29 +1,74 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Principal;
+using System.IO;
 
-namespace Jolly_Pop_Injector {
-    public static class utils {
-        public static void HandleXML(SettingsHandler settings) { //For loading settings from the XML file.
-            int loadxml = XMLHandler.LoadSettingsFromXML(settings);
-            if (loadxml == 1) {
-                MessageBox.Show("Successfully found & Read XML.");
-            } else if (loadxml == 2 || loadxml == 3) {
-                MessageBox.Show("An XML file was found, but an error occurred whilst reading it. It is possible one or more settings were not set. They have been set to default.");
-            } else {
-                MessageBox.Show("Didn't find an XML file. Will now generate one with default values...");
-                XMLHandler.GenerateXML(settings);
-                XMLHandler.LoadSettingsFromXML(settings);
+namespace Jolly_Pop_Injector
+{
+    public static class utils
+    {
+        public static bool IsAdministrator()
+        { //Detects if the user is admin or not (dur)
+            return (new WindowsPrincipal(WindowsIdentity.GetCurrent()))
+                      .IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        public static void LoadSettings(SettingsHandler settings, int context) //Pass the context so if I need to call SerializeSettings, I will have something to pass it.
+        { //For loading settings from the XML file.
+            SettingsHandler loaded_settings = XMLHandler.DeSerialize_Settings();
+            if (loaded_settings == null)
+            {
+                if (!XMLHandler.XMLExists())
+                {
+                    MessageBox.Show("I did not find an XML config file. A new one will be generated with default values.");
+                }
+                else
+                {
+                    MessageBox.Show("An XML config file was found, but I failed to load it properly. It is possible it is damaged. A new one will be generated.");
+                    FileInfo fi = new FileInfo(XMLHandler.XMLPath);
+                    if (fi.IsReadOnly && IsAdministrator()) //If the file is readonly for some reason, that will cause an unauthorizedaccessexception.
+                    {
+                        File.SetAttributes(XMLHandler.XMLPath, File.GetAttributes(XMLHandler.XMLPath) & ~FileAttributes.ReadOnly); //So make it not readonly.
+                        //Since the application must be run as admin in order to set attributes, I check for that.
+                    }
+                    try
+                    {
+                        File.Delete(XMLHandler.XMLPath);
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        string err_text = "An error occurred whilst attempting to delete the corrupt config file. ";
+                        if (!IsAdministrator()) //If the user isn't an administrator, then the file might be set to readonly.
+                        {
+                            MessageBox.Show(err_text + "You are not running as administrator, so it's possible I do not have permission to access the file. Please re-run the tool as admin.");
+                            Application.Exit(); //Exit the tool so the user can re-run as admin. Really not much else I can do.
+                        }
+                    }
+                }
+                SaveSettings(settings, 2); //Try to generate a new config. Since I am calling from loadsettings, pass 2 to the context arg.
+            }
+            else
+            {
+                //Set the settings variables here
+                MessageBox.Show("Successfully loaded the XML file.");
             }
         }
 
-        public static bool IsAdministrator() { //Detects if the user is admin or not (dur)
-            return (new WindowsPrincipal(WindowsIdentity.GetCurrent()))
-                      .IsInRole(WindowsBuiltInRole.Administrator);
+        /*
+            If the context passed is 1, then the caller was the on_exit function, and I will ignore the exceptions to let it close gracefully.
+            If the context passed is 2, then the caller was the load settings function, and I will tell the user an error occured generating a new config.
+        */
+        public static void SaveSettings(SettingsHandler settings, int context)
+        { //For saving settings to the XML file.
+            int save_settings = XMLHandler.Serialize_Settings(settings); //Return 1 for success, 0 on unauthorized access exception.
+            if (context == 1 && save_settings != 1)
+            {
+                save_settings = XMLHandler.Serialize_Settings(settings); //If an exception occurs, ignore it and exit.
+            }
+            else if (context == 2 && save_settings != 1)
+            {
+                MessageBox.Show("An access violation occurred whilst generating a new configuration file. Are you running as admin?");
+            }
         }
     }
 }

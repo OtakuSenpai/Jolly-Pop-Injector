@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jolly_Pop_Injector {
-    public class DLLInjector {
+namespace Jolly_Pop_Injector
+{
+    public class DLLInjector
+    {
 
     }
 }
