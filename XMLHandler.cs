@@ -55,7 +55,7 @@ namespace Jolly_Pop_Injector {
             bool AutoInjectWrote = true;
             bool CloseAfterInjectionWrote = true;
             bool SaveProcessNameWrote = true;
-            bool SaveDllLocationWrote = true;
+            bool SaveDLLlocationWrote = true;
             bool ProcessWrote = true;
             bool DLLWrote = true;
 
@@ -78,9 +78,9 @@ namespace Jolly_Pop_Injector {
                         SaveProcessNameWrote = false;
                     }
                     if (c.Name == "SaveDLLlocation") {
-                        c.Value = settings.SaveDllLocation.ToString();
+                        c.Value = settings.SaveDLLlocation.ToString();
                     } else {
-                        SaveDllLocationWrote = false;
+                        SaveDLLlocationWrote = false;
                     }
                     if (c.Name == "Process") {
                         c.Value = settings.Process;
@@ -99,7 +99,7 @@ namespace Jolly_Pop_Injector {
                 AutoInjectWrote = false;
                 CloseAfterInjectionWrote = false;
                 SaveProcessNameWrote = false;
-                SaveDllLocationWrote = false;
+                SaveDLLlocationWrote = false;
                 ProcessWrote = false;
                 DLLWrote = false;
                 root = doc.DocumentElement["JPISettings"]; //Reset root to JPISettings. it will be written to later.
@@ -121,10 +121,10 @@ namespace Jolly_Pop_Injector {
                 SaveProcessName.Value = settings.SaveProcessName.ToString();
                 root.Attributes.SetNamedItem(SaveProcessName);
             }
-            if (!SaveDllLocationWrote) {
-                XmlAttribute SaveDllLocation = doc.CreateAttribute("SaveDllLocation");
-                SaveDllLocation.Value = settings.SaveDllLocation.ToString();
-                root.Attributes.SetNamedItem(SaveDllLocation);
+            if (!SaveDLLlocationWrote) {
+                XmlAttribute SaveDLLlocation = doc.CreateAttribute("SaveDLLlocation");
+                SaveDLLlocation.Value = settings.SaveDLLlocation.ToString();
+                root.Attributes.SetNamedItem(SaveDLLlocation);
             }
             if (!ProcessWrote) {
                 XmlAttribute Process = doc.CreateAttribute("Process");
@@ -155,7 +155,7 @@ namespace Jolly_Pop_Injector {
                                 int AutoInject;
                                 int CloseAfterInjection;
                                 int SaveProcessName;
-                                int SaveDllLocation;
+                                int SaveDLLlocation;
                                 string Process;
                                 string DLL;
                                 if (!int.TryParse(xmlReader.GetAttribute("AutoInject"), out AutoInject)) {
@@ -173,10 +173,10 @@ namespace Jolly_Pop_Injector {
                                 } else {
                                     s.SaveProcessName = SaveProcessName;
                                 }
-                                if (!int.TryParse(xmlReader.GetAttribute("SaveDllLocation"), out SaveDllLocation)) {
+                                if (!int.TryParse(xmlReader.GetAttribute("SaveDLLlocation"), out SaveDLLlocation)) {
                                     err = true;
                                 } else {
-                                    s.SaveDllLocation = SaveDllLocation;
+                                    s.SaveDLLlocation = SaveDLLlocation;
                                 }
                                 DLL = xmlReader.GetAttribute("DLL");
                                 Process = xmlReader.GetAttribute("Process");
@@ -190,6 +190,7 @@ namespace Jolly_Pop_Injector {
                                 } else {
                                     err = true;
                                 }
+                                xmlReader.Close();
                             }
                         }
                     }

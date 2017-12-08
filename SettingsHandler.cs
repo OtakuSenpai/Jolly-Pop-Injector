@@ -9,7 +9,7 @@ namespace Jolly_Pop_Injector {
         public float AutoInject { get; set; } = 1;
         public float CloseAfterInjection { get; set; } = 1;
         public int SaveProcessName { get; set; } = 1;
-        public int SaveDllLocation { get; set; } = 1;
+        public int SaveDLLlocation { get; set; } = 1;
         public string Process { get; set; } = "Not set";
         public string DLL { get; set; } = "Not set";
     }
