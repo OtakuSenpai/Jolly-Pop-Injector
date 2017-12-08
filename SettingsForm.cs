@@ -10,8 +10,12 @@ using System.Windows.Forms;
 
 namespace Jolly_Pop_Injector {
     public partial class SettingsForm : Form {
-        public SettingsForm() {
+        public SettingsForm(SettingsHandler settings) {
             InitializeComponent();
+        }
+
+        private void SettingsForm_Load(object sender, EventArgs e) {
+
         }
     }
 }

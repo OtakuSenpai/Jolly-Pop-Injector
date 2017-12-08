@@ -99,6 +99,7 @@
             this.DLLBrowseBtn.TabIndex = 6;
             this.DLLBrowseBtn.Text = "...";
             this.DLLBrowseBtn.UseVisualStyleBackColor = true;
+            this.DLLBrowseBtn.Click += new System.EventHandler(this.DLLBrowseBtn_Click);
             // 
             // BrowseProcessBtn
             // 
@@ -108,6 +109,7 @@
             this.BrowseProcessBtn.TabIndex = 7;
             this.BrowseProcessBtn.Text = "...";
             this.BrowseProcessBtn.UseVisualStyleBackColor = true;
+            this.BrowseProcessBtn.Click += new System.EventHandler(this.BrowseProcessBtn_Click);
             // 
             // InjectBtn
             // 
@@ -117,6 +119,7 @@
             this.InjectBtn.TabIndex = 8;
             this.InjectBtn.Text = "Inject";
             this.InjectBtn.UseVisualStyleBackColor = true;
+            this.InjectBtn.Click += new System.EventHandler(this.InjectBtn_Click);
             // 
             // SettingsBtn
             // 
@@ -126,6 +129,7 @@
             this.SettingsBtn.TabIndex = 9;
             this.SettingsBtn.Text = "Settings";
             this.SettingsBtn.UseVisualStyleBackColor = true;
+            this.SettingsBtn.Click += new System.EventHandler(this.SettingsBtn_Click);
             // 
             // ExitBtn
             // 
@@ -135,6 +139,7 @@
             this.ExitBtn.TabIndex = 10;
             this.ExitBtn.Text = "Exit";
             this.ExitBtn.UseVisualStyleBackColor = true;
+            this.ExitBtn.Click += new System.EventHandler(this.ExitBtn_Click);
             // 
             // GithubLinkLabel
             // 
@@ -145,14 +150,17 @@
             this.GithubLinkLabel.TabIndex = 11;
             this.GithubLinkLabel.TabStop = true;
             this.GithubLinkLabel.Text = "https://github.com/AWilliams17/Jolly-Pop-Injector";
+            this.GithubLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.GithubLinkLabel_LinkClicked);
             // 
             // StatusTimer
             // 
             this.StatusTimer.Enabled = true;
+            this.StatusTimer.Tick += new System.EventHandler(this.StatusTimer_Tick);
             // 
             // AutoInjectTimer
             // 
             this.AutoInjectTimer.Enabled = true;
+            this.AutoInjectTimer.Tick += new System.EventHandler(this.AutoInjectTimer_Tick);
             // 
             // Mainform
             // 
