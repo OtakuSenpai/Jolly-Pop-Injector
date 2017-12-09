@@ -59,7 +59,7 @@ namespace Jolly_Pop_Injector
 
         private void InjectBtn_Click(object sender, EventArgs e)
         {
-
+            DLLInjector.InjectDLL("HWMonitor", "f.dll");
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
