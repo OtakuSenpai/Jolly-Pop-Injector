@@ -81,12 +81,34 @@ namespace Jolly_Pop_Injector
 
         private void BrowseProcessBtn_Click(object sender, EventArgs e)
         {
-
+            string process_name = ProcessTextbox.Text;
+            if (ProcessHandler.ProcessIsRunning(process_name))
+            {
+                if (process_name.Contains(".exe"))
+                {
+                    process_name = process_name.Substring(0, process_name.Length - 4); //Strip it out
+                }
+                settings.Process = process_name;
+                MessageBox.Show("Process found.");
+            }
+            else
+            {
+                MessageBox.Show("I did not find that process.");
+            }
         }
 
         private void StatusTimer_Tick(object sender, EventArgs e)
         {
-
+            if (settings.DLL == "Not set" || settings.Process == "Not set")
+            {
+                StatusLabel.Text = "Waiting for a DLL/Process.";
+                StatusLabel.ForeColor = Color.Red;
+            }
+            else
+            {
+                StatusLabel.Text = "DLL and Process set. Ready.";
+                StatusLabel.ForeColor = Color.Green;
+            }
         }
 
         private void AutoInjectTimer_Tick(object sender, EventArgs e)

@@ -84,14 +84,15 @@
             this.DLLPathTextBox.ReadOnly = true;
             this.DLLPathTextBox.Size = new System.Drawing.Size(151, 20);
             this.DLLPathTextBox.TabIndex = 4;
+            this.DLLPathTextBox.Text = "Select the DLL to inject";
             // 
             // ProcessTextbox
             // 
             this.ProcessTextbox.Location = new System.Drawing.Point(58, 31);
             this.ProcessTextbox.Name = "ProcessTextbox";
-            this.ProcessTextbox.ReadOnly = true;
             this.ProcessTextbox.Size = new System.Drawing.Size(151, 20);
             this.ProcessTextbox.TabIndex = 5;
+            this.ProcessTextbox.Text = "Specify the process to inject";
             // 
             // DLLBrowseBtn
             // 
@@ -109,7 +110,7 @@
             this.BrowseProcessBtn.Name = "BrowseProcessBtn";
             this.BrowseProcessBtn.Size = new System.Drawing.Size(33, 23);
             this.BrowseProcessBtn.TabIndex = 7;
-            this.BrowseProcessBtn.Text = "...";
+            this.BrowseProcessBtn.Text = "Set";
             this.BrowseProcessBtn.UseVisualStyleBackColor = true;
             this.BrowseProcessBtn.Click += new System.EventHandler(this.BrowseProcessBtn_Click);
             // 
