@@ -180,6 +180,7 @@
             // ToolTip
             // 
             this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.ToolTip.ToolTipTitle = "About";
             // 
             // Mainform
             // 
