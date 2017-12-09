@@ -114,7 +114,10 @@ namespace Jolly_Pop_Injector
                         AutoShutdownTimer.Enabled = false;
                     }
                 }
-                MessageBox.Show("Successfully injected the process.");
+                else
+                {
+                    MessageBox.Show("Successfully injected the process.");
+                }
             }
         }
     }

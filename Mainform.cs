@@ -141,8 +141,8 @@ namespace Jolly_Pop_Injector
             { //So go ahead and do whatever.
                 if (last_auto_injected_process != settings.Process)
                 {
-                    utils.Inject(settings, AutoShutdown);
                     last_auto_injected_process = settings.Process;
+                    utils.Inject(settings, AutoShutdown);
                 }
                 //If the currently selected process has already been auto-injected, then don't inject it a million other times
                 //with each tick. :p

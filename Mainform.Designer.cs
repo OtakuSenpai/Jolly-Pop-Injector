@@ -154,6 +154,7 @@
             // AutoInjectTimer
             // 
             this.AutoInjectTimer.Enabled = true;
+            this.AutoInjectTimer.Interval = 2000;
             this.AutoInjectTimer.Tick += new System.EventHandler(this.AutoInjectTimer_Tick);
             // 
             // BrowseProcessBtn
