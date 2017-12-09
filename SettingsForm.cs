@@ -38,6 +38,10 @@ namespace Jolly_Pop_Injector
             {
                 SilentStartCheckbox.Checked = true;
             }
+            if (settings.AutoCloseWarning == 1)
+            {
+                ShowWarningCheckbox.Checked = true;
+            }
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -107,6 +111,18 @@ namespace Jolly_Pop_Injector
             else
             {
                 settings.SilentStart = 0;
+            }
+        }
+
+        private void ShowWarningCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ShowWarningCheckbox.Checked)
+            {
+                settings.AutoCloseWarning = 1;
+            }
+            else
+            {
+                settings.AutoCloseWarning = 0;
             }
         }
     }

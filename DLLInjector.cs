@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace Jolly_Pop_Injector
 {
-    public class DLLInjector
+    public static class DLLInjector
     {
         const int PROCESS_WM_READ = 0x0010;
         const int PROCESS_VM_WRITE = 0x0020;

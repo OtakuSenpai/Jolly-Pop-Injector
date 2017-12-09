@@ -115,11 +115,14 @@ namespace Jolly_Pop_Injector
                 {
                     shutdown_countdown_var = 6; //Set the countdown var to 0, just incase it has been used before.
                     AutoShutdownTimer.Enabled = true; //After 3 seconds, the timer's tick() gets called, causing Application.Exit() to be called.
-                    var result = MessageBox.Show("Successfully injected the process. Close after injection is enabled, so I will close after 5 seconds.", "Auto-Close Enabled", MessageBoxButtons.OKCancel);
-                    if (result == DialogResult.Cancel) //If the user presses cancel, then... You know, cancel the thing.
+                    if (settings.AutoCloseWarning == 1)
                     {
-                        AutoShutdownTimer.Enabled = false;
-                        shutdown_countdown_var = 6;
+                        var result = MessageBox.Show("Successfully injected the process. Close after injection is enabled, so I will close after 5 seconds.", "Auto-Close Enabled", MessageBoxButtons.OKCancel);
+                        if (result == DialogResult.Cancel) //If the user presses cancel, then... You know, cancel the thing.
+                        {
+                            AutoShutdownTimer.Enabled = false;
+                            shutdown_countdown_var = 6;
+                        }
                     }
                 }
                 else
