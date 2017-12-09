@@ -49,7 +49,12 @@ namespace Jolly_Pop_Injector
             }
             else
             {
-                //Set the settings variables here
+                settings.AutoInject = loaded_settings.AutoInject;
+                settings.CloseAfterInjection = loaded_settings.CloseAfterInjection;
+                settings.DLL = loaded_settings.DLL;
+                settings.Process = loaded_settings.Process;
+                settings.SaveDLLlocation = loaded_settings.SaveDLLlocation;
+                settings.SaveProcessName = loaded_settings.SaveProcessName;
                 MessageBox.Show("Successfully loaded the XML file.");
             }
         }

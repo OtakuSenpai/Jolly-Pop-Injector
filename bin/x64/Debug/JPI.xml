@@ -4,6 +4,6 @@
   <CloseAfterInjection>1</CloseAfterInjection>
   <SaveProcessName>1</SaveProcessName>
   <SaveDLLlocation>1</SaveDLLlocation>
-  <Process>Not set</Process>
-  <DLL>Not set</DLL>
+  <Process>steam</Process>
+  <DLL>C:\Users\Austin\Source\Repos\Jolly-Pop-Injector\Jolly Pop Injector\bin\Debug\f.dll</DLL>
 </SettingsHandler>

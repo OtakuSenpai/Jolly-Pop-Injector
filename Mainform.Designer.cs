@@ -32,13 +32,13 @@
             this.DLLPathTextBox = new System.Windows.Forms.TextBox();
             this.ProcessTextbox = new System.Windows.Forms.TextBox();
             this.DLLBrowseBtn = new System.Windows.Forms.Button();
-            this.BrowseProcessBtn = new System.Windows.Forms.Button();
             this.InjectBtn = new System.Windows.Forms.Button();
             this.SettingsBtn = new System.Windows.Forms.Button();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.GithubLinkLabel = new System.Windows.Forms.LinkLabel();
             this.StatusTimer = new System.Windows.Forms.Timer(this.components);
             this.AutoInjectTimer = new System.Windows.Forms.Timer(this.components);
+            this.BrowseProcessBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -82,7 +82,7 @@
             this.DLLPathTextBox.Location = new System.Drawing.Point(58, 6);
             this.DLLPathTextBox.Name = "DLLPathTextBox";
             this.DLLPathTextBox.ReadOnly = true;
-            this.DLLPathTextBox.Size = new System.Drawing.Size(151, 20);
+            this.DLLPathTextBox.Size = new System.Drawing.Size(230, 20);
             this.DLLPathTextBox.TabIndex = 4;
             this.DLLPathTextBox.Text = "Select the DLL to inject";
             // 
@@ -90,13 +90,13 @@
             // 
             this.ProcessTextbox.Location = new System.Drawing.Point(58, 31);
             this.ProcessTextbox.Name = "ProcessTextbox";
-            this.ProcessTextbox.Size = new System.Drawing.Size(151, 20);
+            this.ProcessTextbox.Size = new System.Drawing.Size(230, 20);
             this.ProcessTextbox.TabIndex = 5;
             this.ProcessTextbox.Text = "Specify the process to inject";
             // 
             // DLLBrowseBtn
             // 
-            this.DLLBrowseBtn.Location = new System.Drawing.Point(211, 4);
+            this.DLLBrowseBtn.Location = new System.Drawing.Point(294, 4);
             this.DLLBrowseBtn.Name = "DLLBrowseBtn";
             this.DLLBrowseBtn.Size = new System.Drawing.Size(33, 23);
             this.DLLBrowseBtn.TabIndex = 6;
@@ -104,21 +104,11 @@
             this.DLLBrowseBtn.UseVisualStyleBackColor = true;
             this.DLLBrowseBtn.Click += new System.EventHandler(this.DLLBrowseBtn_Click);
             // 
-            // BrowseProcessBtn
-            // 
-            this.BrowseProcessBtn.Location = new System.Drawing.Point(211, 29);
-            this.BrowseProcessBtn.Name = "BrowseProcessBtn";
-            this.BrowseProcessBtn.Size = new System.Drawing.Size(33, 23);
-            this.BrowseProcessBtn.TabIndex = 7;
-            this.BrowseProcessBtn.Text = "Set";
-            this.BrowseProcessBtn.UseVisualStyleBackColor = true;
-            this.BrowseProcessBtn.Click += new System.EventHandler(this.BrowseProcessBtn_Click);
-            // 
             // InjectBtn
             // 
-            this.InjectBtn.Location = new System.Drawing.Point(169, 79);
+            this.InjectBtn.Location = new System.Drawing.Point(239, 79);
             this.InjectBtn.Name = "InjectBtn";
-            this.InjectBtn.Size = new System.Drawing.Size(75, 23);
+            this.InjectBtn.Size = new System.Drawing.Size(88, 23);
             this.InjectBtn.TabIndex = 8;
             this.InjectBtn.Text = "Inject";
             this.InjectBtn.UseVisualStyleBackColor = true;
@@ -126,9 +116,9 @@
             // 
             // SettingsBtn
             // 
-            this.SettingsBtn.Location = new System.Drawing.Point(88, 79);
+            this.SettingsBtn.Location = new System.Drawing.Point(122, 79);
             this.SettingsBtn.Name = "SettingsBtn";
-            this.SettingsBtn.Size = new System.Drawing.Size(75, 23);
+            this.SettingsBtn.Size = new System.Drawing.Size(88, 23);
             this.SettingsBtn.TabIndex = 9;
             this.SettingsBtn.Text = "Settings";
             this.SettingsBtn.UseVisualStyleBackColor = true;
@@ -138,7 +128,7 @@
             // 
             this.ExitBtn.Location = new System.Drawing.Point(7, 79);
             this.ExitBtn.Name = "ExitBtn";
-            this.ExitBtn.Size = new System.Drawing.Size(75, 23);
+            this.ExitBtn.Size = new System.Drawing.Size(88, 23);
             this.ExitBtn.TabIndex = 10;
             this.ExitBtn.Text = "Exit";
             this.ExitBtn.UseVisualStyleBackColor = true;
@@ -165,11 +155,21 @@
             this.AutoInjectTimer.Enabled = true;
             this.AutoInjectTimer.Tick += new System.EventHandler(this.AutoInjectTimer_Tick);
             // 
+            // BrowseProcessBtn
+            // 
+            this.BrowseProcessBtn.Location = new System.Drawing.Point(294, 29);
+            this.BrowseProcessBtn.Name = "BrowseProcessBtn";
+            this.BrowseProcessBtn.Size = new System.Drawing.Size(33, 23);
+            this.BrowseProcessBtn.TabIndex = 7;
+            this.BrowseProcessBtn.Text = "Set";
+            this.BrowseProcessBtn.UseVisualStyleBackColor = true;
+            this.BrowseProcessBtn.Click += new System.EventHandler(this.BrowseProcessBtn_Click);
+            // 
             // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(249, 126);
+            this.ClientSize = new System.Drawing.Size(336, 126);
             this.Controls.Add(this.GithubLinkLabel);
             this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.SettingsBtn);
@@ -203,13 +203,13 @@
         private System.Windows.Forms.TextBox DLLPathTextBox;
         private System.Windows.Forms.TextBox ProcessTextbox;
         private System.Windows.Forms.Button DLLBrowseBtn;
-        private System.Windows.Forms.Button BrowseProcessBtn;
         private System.Windows.Forms.Button InjectBtn;
         private System.Windows.Forms.Button SettingsBtn;
         private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.LinkLabel GithubLinkLabel;
         private System.Windows.Forms.Timer StatusTimer;
         private System.Windows.Forms.Timer AutoInjectTimer;
+        private System.Windows.Forms.Button BrowseProcessBtn;
     }
 }
 

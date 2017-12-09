@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace Jolly_Pop_Injector
 {
@@ -15,7 +16,7 @@ namespace Jolly_Pop_Injector
     {
 
         public SettingsHandler settings = new SettingsHandler();
-        public XMLHandler xmlhandler = new XMLHandler(Application.StartupPath + "/CEMT.xml");
+        public XMLHandler xmlhandler = new XMLHandler(Application.StartupPath + "/JPI.xml");
         public SettingsForm settingsform;
 
         public Mainform()
@@ -34,6 +35,14 @@ namespace Jolly_Pop_Injector
                 MessageBox.Show("Warning - You must run this tool as an administrator in order for it to work properly.");
             }
             this.Text = window_title;
+            if (settings.SaveProcessName == 1 && settings.Process != "Not set")
+            {
+                ProcessTextbox.Text = settings.Process;
+            }
+            if (settings.SaveDLLlocation == 1 && settings.DLL != "Not set")
+            {
+                DLLPathTextBox.Text = settings.DLL;
+            }
         }
 
         public void OnProcessExit(object sender, EventArgs e)
@@ -59,7 +68,7 @@ namespace Jolly_Pop_Injector
 
         private void InjectBtn_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -103,11 +112,25 @@ namespace Jolly_Pop_Injector
             {
                 StatusLabel.Text = "Waiting for a DLL/Process.";
                 StatusLabel.ForeColor = Color.Red;
+                InjectBtn.Enabled = false;
+            }
+            else if (!ProcessHandler.ProcessIsRunning(settings.Process))
+            {
+                StatusLabel.Text = "I can't find the process.";
+                StatusLabel.ForeColor = Color.Red;
+                InjectBtn.Enabled = false;
+            }
+            else if (!File.Exists(settings.DLL))
+            {
+                StatusLabel.Text = "I can't find the DLL.";
+                StatusLabel.ForeColor = Color.Red;
+                InjectBtn.Enabled = false;
             }
             else
             {
-                StatusLabel.Text = "DLL and Process set. Ready.";
+                StatusLabel.Text = "Ready to inject the process: " + settings.Process.ToUpper();
                 StatusLabel.ForeColor = Color.Green;
+                InjectBtn.Enabled = true;
             }
         }
 
