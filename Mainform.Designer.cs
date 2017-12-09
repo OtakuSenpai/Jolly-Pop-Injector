@@ -39,6 +39,7 @@
             this.StatusTimer = new System.Windows.Forms.Timer(this.components);
             this.AutoInjectTimer = new System.Windows.Forms.Timer(this.components);
             this.BrowseProcessBtn = new System.Windows.Forms.Button();
+            this.AutoShutdown = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -165,6 +166,11 @@
             this.BrowseProcessBtn.UseVisualStyleBackColor = true;
             this.BrowseProcessBtn.Click += new System.EventHandler(this.BrowseProcessBtn_Click);
             // 
+            // AutoShutdown
+            // 
+            this.AutoShutdown.Interval = 3000;
+            this.AutoShutdown.Tick += new System.EventHandler(this.AutoShutdown_Tick);
+            // 
             // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -210,6 +216,7 @@
         private System.Windows.Forms.Timer StatusTimer;
         private System.Windows.Forms.Timer AutoInjectTimer;
         private System.Windows.Forms.Button BrowseProcessBtn;
+        private System.Windows.Forms.Timer AutoShutdown;
     }
 }
 

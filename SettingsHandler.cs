@@ -8,8 +8,8 @@ namespace Jolly_Pop_Injector
 {
     public class SettingsHandler
     {
-        public float AutoInject { get; set; } = 1;
-        public float CloseAfterInjection { get; set; } = 1;
+        public float AutoInject { get; set; } = 0;
+        public float CloseAfterInjection { get; set; } = 0;
         public int SaveProcessName { get; set; } = 1;
         public int SaveDLLlocation { get; set; } = 1;
         public string Process { get; set; } = "Not set";

@@ -68,7 +68,7 @@ namespace Jolly_Pop_Injector
 
         private void InjectBtn_Click(object sender, EventArgs e)
         {
-            utils.Inject(settings);
+            utils.Inject(settings, AutoShutdown);
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -106,7 +106,7 @@ namespace Jolly_Pop_Injector
             }
         }
 
-        private void StatusTimer_Tick(object sender, EventArgs e)
+        private void StatusTimer_Tick(object sender, EventArgs e) //lol this can probably be shortened
         {
             if (settings.DLL == "Not set" || settings.Process == "Not set")
             {
@@ -141,12 +141,17 @@ namespace Jolly_Pop_Injector
             { //So go ahead and do whatever.
                 if (last_auto_injected_process != settings.Process)
                 {
-                    utils.Inject(settings);
+                    utils.Inject(settings, AutoShutdown);
                     last_auto_injected_process = settings.Process;
                 }
                 //If the currently selected process has already been auto-injected, then don't inject it a million other times
                 //with each tick. :p
             }
+        }
+
+        private void AutoShutdown_Tick(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
