@@ -35,10 +35,13 @@ namespace Jolly_Pop_Injector
         static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, IntPtr dwSize, uint flAllocationType, uint flProtect);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr GetModuleHandle(string lpModuleName);
+        static extern IntPtr GetModuleHandle(string lpModuleName);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, int lpNumberOfBytesWritten);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool CloseHandle(IntPtr hHandle);
 
         public static int InjectDLL(string target_process_name, string DLLName)
         {
@@ -49,12 +52,18 @@ namespace Jolly_Pop_Injector
             IntPtr process_handle = OpenProcess(PROCESS_WM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, false, PID);
             IntPtr LoadLibraryAddress = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
             IntPtr AddressToWrite = VirtualAllocEx(process_handle, (IntPtr)null, (IntPtr)DLLName.Length, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-
             byte[] bytes = Encoding.ASCII.GetBytes(DLLName);
-            WriteProcessMemory(process_handle, AddressToWrite, bytes, (uint)bytes.Length, 0);
-            CreateRemoteThread(process_handle, (IntPtr)null, IntPtr.Zero, LoadLibraryAddress, AddressToWrite, 0, (IntPtr)null);
+            bool wpm = WriteProcessMemory(process_handle, AddressToWrite, bytes, (uint)bytes.Length, 0);
+            IntPtr RemoteThread = CreateRemoteThread(process_handle, (IntPtr)null, IntPtr.Zero, LoadLibraryAddress, AddressToWrite, 0, (IntPtr)null);
+            
+            if (process_handle == (IntPtr)null || LoadLibraryAddress == (IntPtr)null || AddressToWrite == (IntPtr)null || RemoteThread == (IntPtr)null || wpm == false)
+            {
+                CloseHandle(process_handle);
+                return Marshal.GetLastWin32Error(); //professional error handle
+            }
 
-            return 1;
+            CloseHandle(process_handle);
+            return 1; //success :^)
         }
     }
 }

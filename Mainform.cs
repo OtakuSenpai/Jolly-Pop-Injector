@@ -68,7 +68,18 @@ namespace Jolly_Pop_Injector
 
         private void InjectBtn_Click(object sender, EventArgs e)
         {
-            
+            int return_value = DLLInjector.InjectDLL(settings.Process, settings.DLL);
+            if (return_value != 1)
+            {
+                if (return_value == 5)
+                {
+                    MessageBox.Show("Failed to inject the process: An access violation occurred. Are you running as admin?");
+                }
+                if (return_value == 6)
+                {
+                    MessageBox.Show("Failed to inject the process: The handle is invalid. ");
+                }
+            }
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
