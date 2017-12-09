@@ -107,9 +107,9 @@
             // 
             // InjectBtn
             // 
-            this.InjectBtn.Location = new System.Drawing.Point(229, 79);
+            this.InjectBtn.Location = new System.Drawing.Point(226, 79);
             this.InjectBtn.Name = "InjectBtn";
-            this.InjectBtn.Size = new System.Drawing.Size(98, 23);
+            this.InjectBtn.Size = new System.Drawing.Size(101, 23);
             this.InjectBtn.TabIndex = 8;
             this.InjectBtn.Text = "Inject";
             this.InjectBtn.UseVisualStyleBackColor = true;
@@ -117,9 +117,9 @@
             // 
             // SettingsBtn
             // 
-            this.SettingsBtn.Location = new System.Drawing.Point(119, 79);
+            this.SettingsBtn.Location = new System.Drawing.Point(117, 79);
             this.SettingsBtn.Name = "SettingsBtn";
-            this.SettingsBtn.Size = new System.Drawing.Size(98, 23);
+            this.SettingsBtn.Size = new System.Drawing.Size(101, 23);
             this.SettingsBtn.TabIndex = 9;
             this.SettingsBtn.Text = "Settings";
             this.SettingsBtn.UseVisualStyleBackColor = true;
@@ -129,7 +129,7 @@
             // 
             this.ExitBtn.Location = new System.Drawing.Point(7, 79);
             this.ExitBtn.Name = "ExitBtn";
-            this.ExitBtn.Size = new System.Drawing.Size(98, 23);
+            this.ExitBtn.Size = new System.Drawing.Size(101, 23);
             this.ExitBtn.TabIndex = 10;
             this.ExitBtn.Text = "Exit";
             this.ExitBtn.UseVisualStyleBackColor = true;
