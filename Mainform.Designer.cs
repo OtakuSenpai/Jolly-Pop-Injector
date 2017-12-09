@@ -81,6 +81,7 @@
             // 
             this.DLLPathTextBox.Location = new System.Drawing.Point(58, 6);
             this.DLLPathTextBox.Name = "DLLPathTextBox";
+            this.DLLPathTextBox.ReadOnly = true;
             this.DLLPathTextBox.Size = new System.Drawing.Size(151, 20);
             this.DLLPathTextBox.TabIndex = 4;
             // 
@@ -88,6 +89,7 @@
             // 
             this.ProcessTextbox.Location = new System.Drawing.Point(58, 31);
             this.ProcessTextbox.Name = "ProcessTextbox";
+            this.ProcessTextbox.ReadOnly = true;
             this.ProcessTextbox.Size = new System.Drawing.Size(151, 20);
             this.ProcessTextbox.TabIndex = 5;
             // 

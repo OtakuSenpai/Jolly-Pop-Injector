@@ -42,7 +42,6 @@ namespace Jolly_Pop_Injector
 
         public static int InjectDLL(string target_process_name, string DLLName)
         {
-            //CreateRemoteThread to LoadLibraryA()
             Process[] process = Process.GetProcessesByName(target_process_name);
 
             int PID = process[0].Id;
@@ -56,7 +55,6 @@ namespace Jolly_Pop_Injector
             CreateRemoteThread(process_handle, (IntPtr)null, IntPtr.Zero, LoadLibraryAddress, AddressToWrite, 0, (IntPtr)null);
 
             return 1;
-
         }
     }
 }

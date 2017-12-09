@@ -69,7 +69,14 @@ namespace Jolly_Pop_Injector
 
         private void DLLBrowseBtn_Click(object sender, EventArgs e)
         {
-
+            OpenFileDialog browse_dll = new OpenFileDialog();
+            browse_dll.Filter = "DLL Files|*.dll";
+            browse_dll.Title = "Select the DLL to inject.";
+            if (browse_dll.ShowDialog() == DialogResult.OK)
+            {
+                DLLPathTextBox.Text = browse_dll.FileName;
+                settings.DLL = browse_dll.FileName;
+            }
         }
 
         private void BrowseProcessBtn_Click(object sender, EventArgs e)
