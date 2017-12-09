@@ -32,12 +32,13 @@
             this.CloseBtn = new System.Windows.Forms.Button();
             this.SilentStartCheckbox = new System.Windows.Forms.CheckBox();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // AutoInjectCheckbox
             // 
             this.AutoInjectCheckbox.AutoSize = true;
-            this.AutoInjectCheckbox.Location = new System.Drawing.Point(12, 12);
+            this.AutoInjectCheckbox.Location = new System.Drawing.Point(15, 29);
             this.AutoInjectCheckbox.Name = "AutoInjectCheckbox";
             this.AutoInjectCheckbox.Size = new System.Drawing.Size(117, 17);
             this.AutoInjectCheckbox.TabIndex = 0;
@@ -50,7 +51,7 @@
             // CloseAfterInjectionCheckbox
             // 
             this.CloseAfterInjectionCheckbox.AutoSize = true;
-            this.CloseAfterInjectionCheckbox.Location = new System.Drawing.Point(12, 35);
+            this.CloseAfterInjectionCheckbox.Location = new System.Drawing.Point(15, 52);
             this.CloseAfterInjectionCheckbox.Name = "CloseAfterInjectionCheckbox";
             this.CloseAfterInjectionCheckbox.Size = new System.Drawing.Size(120, 17);
             this.CloseAfterInjectionCheckbox.TabIndex = 2;
@@ -62,7 +63,7 @@
             // SaveDLLCheckbox
             // 
             this.SaveDLLCheckbox.AutoSize = true;
-            this.SaveDLLCheckbox.Location = new System.Drawing.Point(12, 58);
+            this.SaveDLLCheckbox.Location = new System.Drawing.Point(15, 75);
             this.SaveDLLCheckbox.Name = "SaveDLLCheckbox";
             this.SaveDLLCheckbox.Size = new System.Drawing.Size(118, 17);
             this.SaveDLLCheckbox.TabIndex = 3;
@@ -75,7 +76,7 @@
             // SaveProcessCheckbox
             // 
             this.SaveProcessCheckbox.AutoSize = true;
-            this.SaveProcessCheckbox.Location = new System.Drawing.Point(12, 81);
+            this.SaveProcessCheckbox.Location = new System.Drawing.Point(15, 98);
             this.SaveProcessCheckbox.Name = "SaveProcessCheckbox";
             this.SaveProcessCheckbox.Size = new System.Drawing.Size(123, 17);
             this.SaveProcessCheckbox.TabIndex = 4;
@@ -87,7 +88,7 @@
             // 
             // CloseBtn
             // 
-            this.CloseBtn.Location = new System.Drawing.Point(12, 127);
+            this.CloseBtn.Location = new System.Drawing.Point(12, 144);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(169, 23);
             this.CloseBtn.TabIndex = 5;
@@ -98,7 +99,7 @@
             // SilentStartCheckbox
             // 
             this.SilentStartCheckbox.AutoSize = true;
-            this.SilentStartCheckbox.Location = new System.Drawing.Point(12, 104);
+            this.SilentStartCheckbox.Location = new System.Drawing.Point(15, 121);
             this.SilentStartCheckbox.Name = "SilentStartCheckbox";
             this.SilentStartCheckbox.Size = new System.Drawing.Size(77, 17);
             this.SilentStartCheckbox.TabIndex = 6;
@@ -113,11 +114,21 @@
             // 
             this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(159, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Mouse over the options for help.";
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(193, 160);
+            this.ClientSize = new System.Drawing.Size(194, 176);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.SilentStartCheckbox);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.SaveProcessCheckbox);
@@ -126,6 +137,10 @@
             this.Controls.Add(this.AutoInjectCheckbox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(210, 215);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(210, 215);
             this.Name = "SettingsForm";
             this.Text = "Jolly-Pop Injector Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
@@ -143,5 +158,6 @@
         private System.Windows.Forms.Button CloseBtn;
         private System.Windows.Forms.CheckBox SilentStartCheckbox;
         private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.Label label1;
     }
 }
