@@ -68,7 +68,7 @@ namespace Jolly_Pop_Injector
 
         private void InjectBtn_Click(object sender, EventArgs e)
         {
-            utils.Inject(settings, AutoShutdown);
+            utils.Inject(settings, AutoShutdown, shutdown_countdown);
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -108,29 +108,33 @@ namespace Jolly_Pop_Injector
 
         private void StatusTimer_Tick(object sender, EventArgs e) //lol this can probably be shortened
         {
-            if (settings.DLL == "Not set" || settings.Process == "Not set")
+            if (!AutoShutdown.Enabled)
             {
-                StatusLabel.Text = "Waiting for a DLL/Process.";
-                StatusLabel.ForeColor = Color.Red;
-                InjectBtn.Enabled = false;
-            }
-            else if (!ProcessHandler.ProcessIsRunning(settings.Process))
-            {
-                StatusLabel.Text = "I can't find the process.";
-                StatusLabel.ForeColor = Color.Red;
-                InjectBtn.Enabled = false;
-            }
-            else if (!File.Exists(settings.DLL))
-            {
-                StatusLabel.Text = "I can't find the DLL.";
-                StatusLabel.ForeColor = Color.Red;
-                InjectBtn.Enabled = false;
-            }
-            else
-            {
-                StatusLabel.Text = "Ready to inject the process: " + settings.Process.ToUpper();
-                StatusLabel.ForeColor = Color.Green;
-                InjectBtn.Enabled = true;
+                StatusLabel.BackColor = SystemColors.Control;
+                if (settings.DLL == "Not set" || settings.Process == "Not set")
+                {
+                    StatusLabel.Text = "Waiting for a DLL/Process.";
+                    StatusLabel.ForeColor = Color.Red;
+                    InjectBtn.Enabled = false;
+                }
+                else if (!ProcessHandler.ProcessIsRunning(settings.Process))
+                {
+                    StatusLabel.Text = "I can't find the process.";
+                    StatusLabel.ForeColor = Color.Red;
+                    InjectBtn.Enabled = false;
+                }
+                else if (!File.Exists(settings.DLL))
+                {
+                    StatusLabel.Text = "I can't find the DLL.";
+                    StatusLabel.ForeColor = Color.Red;
+                    InjectBtn.Enabled = false;
+                }
+                else
+                {
+                    StatusLabel.Text = "Ready to inject the process: " + settings.Process.ToUpper();
+                    StatusLabel.ForeColor = Color.Green;
+                    InjectBtn.Enabled = true;
+                }
             }
         }
 
@@ -142,16 +146,24 @@ namespace Jolly_Pop_Injector
                 if (last_auto_injected_process != settings.Process)
                 {
                     last_auto_injected_process = settings.Process;
-                    utils.Inject(settings, AutoShutdown);
+                    utils.Inject(settings, AutoShutdown, shutdown_countdown);
                 }
                 //If the currently selected process has already been auto-injected, then don't inject it a million other times
                 //with each tick. :p
             }
         }
 
+        int shutdown_countdown = 4;
         private void AutoShutdown_Tick(object sender, EventArgs e)
         {
-            Application.Exit();
+            shutdown_countdown--;
+            StatusLabel.Text = "Shutting down in... " + shutdown_countdown.ToString();
+            StatusLabel.ForeColor = Color.Yellow;
+            StatusLabel.BackColor = Color.DarkRed;
+            if (shutdown_countdown == 0)
+            {
+                Application.Exit();
+            }
         }
     }
 }

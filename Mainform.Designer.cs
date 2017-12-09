@@ -169,7 +169,7 @@
             // 
             // AutoShutdown
             // 
-            this.AutoShutdown.Interval = 3000;
+            this.AutoShutdown.Interval = 1000;
             this.AutoShutdown.Tick += new System.EventHandler(this.AutoShutdown_Tick);
             // 
             // Mainform
