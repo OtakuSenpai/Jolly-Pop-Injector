@@ -153,7 +153,7 @@ namespace Jolly_Pop_Injector
             }
         }
 
-        int shutdown_countdown = 4;
+        int shutdown_countdown = 6;
         private void AutoShutdown_Tick(object sender, EventArgs e)
         {
             shutdown_countdown--;
