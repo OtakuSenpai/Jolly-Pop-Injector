@@ -58,6 +58,8 @@ namespace Jolly_Pop_Injector
                 settings.Process = loaded_settings.Process;
                 settings.SaveDLLlocation = loaded_settings.SaveDLLlocation;
                 settings.SaveProcessName = loaded_settings.SaveProcessName;
+                settings.SilentStart = loaded_settings.SilentStart;
+                settings.AutoCloseWarning = loaded_settings.AutoCloseWarning;
                 if (settings.SilentStart == 0)
                 {
                     MessageBox.Show("Successfully loaded the XML file.");
