@@ -40,6 +40,7 @@
             this.AutoInjectCheckbox.TabIndex = 0;
             this.AutoInjectCheckbox.Text = "Automatically Inject";
             this.AutoInjectCheckbox.UseVisualStyleBackColor = true;
+            this.AutoInjectCheckbox.CheckedChanged += new System.EventHandler(this.AutoInjectCheckbox_CheckedChanged);
             // 
             // CloseAfterInjectionCheckbox
             // 
@@ -50,6 +51,7 @@
             this.CloseAfterInjectionCheckbox.TabIndex = 2;
             this.CloseAfterInjectionCheckbox.Text = "Close After Injection";
             this.CloseAfterInjectionCheckbox.UseVisualStyleBackColor = true;
+            this.CloseAfterInjectionCheckbox.CheckedChanged += new System.EventHandler(this.CloseAfterInjectionCheckbox_CheckedChanged);
             // 
             // SaveDLLCheckbox
             // 
@@ -60,6 +62,7 @@
             this.SaveDLLCheckbox.TabIndex = 3;
             this.SaveDLLCheckbox.Text = "Save DLL Location";
             this.SaveDLLCheckbox.UseVisualStyleBackColor = true;
+            this.SaveDLLCheckbox.CheckedChanged += new System.EventHandler(this.SaveDLLCheckbox_CheckedChanged);
             // 
             // SaveProcessCheckbox
             // 
@@ -70,6 +73,7 @@
             this.SaveProcessCheckbox.TabIndex = 4;
             this.SaveProcessCheckbox.Text = "Save Process Name";
             this.SaveProcessCheckbox.UseVisualStyleBackColor = true;
+            this.SaveProcessCheckbox.CheckedChanged += new System.EventHandler(this.SaveProcessCheckbox_CheckedChanged);
             // 
             // CloseBtn
             // 
@@ -79,6 +83,7 @@
             this.CloseBtn.TabIndex = 5;
             this.CloseBtn.Text = "Close";
             this.CloseBtn.UseVisualStyleBackColor = true;
+            this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // SettingsForm
             // 
