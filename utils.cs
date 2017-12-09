@@ -103,7 +103,7 @@ namespace Jolly_Pop_Injector
                 }
                 if (return_value == 6)
                 {
-                    MessageBox.Show("Failed to inject the process: The handle is invalid. ");
+                    MessageBox.Show("Failed to inject the process: The handle is invalid.");
                 }
                 //idk those are the two most likely ones to happen
                 else
