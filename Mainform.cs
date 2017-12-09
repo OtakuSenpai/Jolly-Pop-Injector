@@ -68,23 +68,7 @@ namespace Jolly_Pop_Injector
 
         private void InjectBtn_Click(object sender, EventArgs e)
         {
-            int return_value = DLLInjector.InjectDLL(settings.Process, settings.DLL);
-            if (return_value != 1)
-            {
-                if (return_value == 5)
-                {
-                    MessageBox.Show("Failed to inject the process: An access violation occurred. Are you running as admin?");
-                }
-                if (return_value == 6)
-                {
-                    MessageBox.Show("Failed to inject the process: The handle is invalid. ");
-                }
-                //idk those are the two most likely ones to happen
-                else
-                {
-                    MessageBox.Show("Failed to inject the process. Error code: " + return_value.ToString()); // :<
-                }
-            }
+            utils.Inject(settings);
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -150,9 +134,19 @@ namespace Jolly_Pop_Injector
             }
         }
 
+        private string last_auto_injected_process = null;
         private void AutoInjectTimer_Tick(object sender, EventArgs e)
         {
-
+            if (InjectBtn.Enabled && settings.AutoInject == 1) //If the inject button is enabled then obviously all the above checks passed.
+            { //So go ahead and do whatever.
+                if (last_auto_injected_process != settings.Process)
+                {
+                    utils.Inject(settings);
+                    last_auto_injected_process = settings.Process;
+                }
+                //If the currently selected process has already been auto-injected, then don't inject it a million other times
+                //with each tick. :p
+            }
         }
     }
 }
