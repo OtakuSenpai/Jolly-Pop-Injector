@@ -29,6 +29,7 @@
             this.SaveDLLCheckbox = new System.Windows.Forms.CheckBox();
             this.SaveProcessCheckbox = new System.Windows.Forms.CheckBox();
             this.CloseBtn = new System.Windows.Forms.Button();
+            this.SilentStartCheckbox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // AutoInjectCheckbox
@@ -77,7 +78,7 @@
             // 
             // CloseBtn
             // 
-            this.CloseBtn.Location = new System.Drawing.Point(12, 104);
+            this.CloseBtn.Location = new System.Drawing.Point(12, 127);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(169, 23);
             this.CloseBtn.TabIndex = 5;
@@ -85,11 +86,23 @@
             this.CloseBtn.UseVisualStyleBackColor = true;
             this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
+            // SilentStartCheckbox
+            // 
+            this.SilentStartCheckbox.AutoSize = true;
+            this.SilentStartCheckbox.Location = new System.Drawing.Point(12, 104);
+            this.SilentStartCheckbox.Name = "SilentStartCheckbox";
+            this.SilentStartCheckbox.Size = new System.Drawing.Size(77, 17);
+            this.SilentStartCheckbox.TabIndex = 6;
+            this.SilentStartCheckbox.Text = "Silent Start";
+            this.SilentStartCheckbox.UseVisualStyleBackColor = true;
+            this.SilentStartCheckbox.CheckedChanged += new System.EventHandler(this.SilentStartCheckbox_CheckedChanged);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(193, 138);
+            this.ClientSize = new System.Drawing.Size(193, 160);
+            this.Controls.Add(this.SilentStartCheckbox);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.SaveProcessCheckbox);
             this.Controls.Add(this.SaveDLLCheckbox);
@@ -112,5 +125,6 @@
         private System.Windows.Forms.CheckBox SaveDLLCheckbox;
         private System.Windows.Forms.CheckBox SaveProcessCheckbox;
         private System.Windows.Forms.Button CloseBtn;
+        private System.Windows.Forms.CheckBox SilentStartCheckbox;
     }
 }

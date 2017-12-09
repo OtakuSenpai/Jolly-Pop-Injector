@@ -32,7 +32,10 @@ namespace Jolly_Pop_Injector
             if (!utils.IsAdministrator())
             { //Gripe at the user if they're not an admin.
                 window_title += " -NOT ADMIN-";
-                MessageBox.Show("Warning - You must run this tool as an administrator in order for it to work properly.");
+                if (settings.SilentStart == 0)
+                {
+                    MessageBox.Show("Warning - You must run this tool as an administrator in order for it to work properly.");
+                }
             }
             this.Text = window_title;
             if (settings.SaveProcessName == 1 && settings.Process != "Not set")

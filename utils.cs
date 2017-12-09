@@ -20,7 +20,10 @@ namespace Jolly_Pop_Injector
             {
                 if (!XMLHandler.XMLExists())
                 {
-                    MessageBox.Show("I did not find an XML config file. A new one will be generated with default values.");
+                    if (settings.SilentStart == 0)
+                    {
+                        MessageBox.Show("I did not find an XML config file. A new one will be generated with default values.");
+                    }
                 }
                 else
                 {
@@ -55,7 +58,10 @@ namespace Jolly_Pop_Injector
                 settings.Process = loaded_settings.Process;
                 settings.SaveDLLlocation = loaded_settings.SaveDLLlocation;
                 settings.SaveProcessName = loaded_settings.SaveProcessName;
-                MessageBox.Show("Successfully loaded the XML file.");
+                if (settings.SilentStart == 0)
+                {
+                    MessageBox.Show("Successfully loaded the XML file.");
+                }
             }
         }
 

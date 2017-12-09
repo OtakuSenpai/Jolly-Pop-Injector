@@ -34,6 +34,10 @@ namespace Jolly_Pop_Injector
             {
                 SaveProcessCheckbox.Checked = true;
             }
+            if (settings.SilentStart == 1)
+            {
+                SilentStartCheckbox.Checked = true;
+            }
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -91,6 +95,18 @@ namespace Jolly_Pop_Injector
             else
             {
                 settings.SaveProcessName = 0;
+            }
+        }
+
+        private void SilentStartCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SilentStartCheckbox.Checked)
+            {
+                settings.SilentStart = 1;
+            }
+            else
+            {
+                settings.SilentStart = 0;
             }
         }
     }
