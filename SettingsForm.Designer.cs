@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.AutoInjectCheckbox = new System.Windows.Forms.CheckBox();
             this.CloseAfterInjectionCheckbox = new System.Windows.Forms.CheckBox();
@@ -30,6 +31,7 @@
             this.SaveProcessCheckbox = new System.Windows.Forms.CheckBox();
             this.CloseBtn = new System.Windows.Forms.Button();
             this.SilentStartCheckbox = new System.Windows.Forms.CheckBox();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // AutoInjectCheckbox
@@ -40,6 +42,8 @@
             this.AutoInjectCheckbox.Size = new System.Drawing.Size(117, 17);
             this.AutoInjectCheckbox.TabIndex = 0;
             this.AutoInjectCheckbox.Text = "Automatically Inject";
+            this.ToolTip.SetToolTip(this.AutoInjectCheckbox, "When checked, the tool will automatically inject the\r\nspecified process when/if i" +
+        "t is detected.");
             this.AutoInjectCheckbox.UseVisualStyleBackColor = true;
             this.AutoInjectCheckbox.CheckedChanged += new System.EventHandler(this.AutoInjectCheckbox_CheckedChanged);
             // 
@@ -51,6 +55,7 @@
             this.CloseAfterInjectionCheckbox.Size = new System.Drawing.Size(120, 17);
             this.CloseAfterInjectionCheckbox.TabIndex = 2;
             this.CloseAfterInjectionCheckbox.Text = "Close After Injection";
+            this.ToolTip.SetToolTip(this.CloseAfterInjectionCheckbox, resources.GetString("CloseAfterInjectionCheckbox.ToolTip"));
             this.CloseAfterInjectionCheckbox.UseVisualStyleBackColor = true;
             this.CloseAfterInjectionCheckbox.CheckedChanged += new System.EventHandler(this.CloseAfterInjectionCheckbox_CheckedChanged);
             // 
@@ -62,6 +67,8 @@
             this.SaveDLLCheckbox.Size = new System.Drawing.Size(118, 17);
             this.SaveDLLCheckbox.TabIndex = 3;
             this.SaveDLLCheckbox.Text = "Save DLL Location";
+            this.ToolTip.SetToolTip(this.SaveDLLCheckbox, "When checked, the tool will automatically save the\r\nlocation of the last loaded D" +
+        "LL to the settings file,\r\nand load it on start.");
             this.SaveDLLCheckbox.UseVisualStyleBackColor = true;
             this.SaveDLLCheckbox.CheckedChanged += new System.EventHandler(this.SaveDLLCheckbox_CheckedChanged);
             // 
@@ -73,6 +80,8 @@
             this.SaveProcessCheckbox.Size = new System.Drawing.Size(123, 17);
             this.SaveProcessCheckbox.TabIndex = 4;
             this.SaveProcessCheckbox.Text = "Save Process Name";
+            this.ToolTip.SetToolTip(this.SaveProcessCheckbox, "When checked, the tool will save the last specified\r\nprocess name to the settings" +
+        " file and load it on\r\nlaunch.");
             this.SaveProcessCheckbox.UseVisualStyleBackColor = true;
             this.SaveProcessCheckbox.CheckedChanged += new System.EventHandler(this.SaveProcessCheckbox_CheckedChanged);
             // 
@@ -94,8 +103,15 @@
             this.SilentStartCheckbox.Size = new System.Drawing.Size(77, 17);
             this.SilentStartCheckbox.TabIndex = 6;
             this.SilentStartCheckbox.Text = "Silent Start";
+            this.ToolTip.SetToolTip(this.SilentStartCheckbox, "When checked, the settings configuration file &\r\nadministrator warnings will not " +
+        "be shown. Of course,\r\nif an error occurs whilst attempting to load the XML,\r\ntha" +
+        "t will still be shown.");
             this.SilentStartCheckbox.UseVisualStyleBackColor = true;
             this.SilentStartCheckbox.CheckedChanged += new System.EventHandler(this.SilentStartCheckbox_CheckedChanged);
+            // 
+            // ToolTip
+            // 
+            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // SettingsForm
             // 
@@ -126,5 +142,6 @@
         private System.Windows.Forms.CheckBox SaveProcessCheckbox;
         private System.Windows.Forms.Button CloseBtn;
         private System.Windows.Forms.CheckBox SilentStartCheckbox;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }

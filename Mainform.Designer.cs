@@ -40,6 +40,7 @@
             this.AutoInjectTimer = new System.Windows.Forms.Timer(this.components);
             this.BrowseProcessBtn = new System.Windows.Forms.Button();
             this.AutoShutdown = new System.Windows.Forms.Timer(this.components);
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // label1
@@ -102,6 +103,8 @@
             this.DLLBrowseBtn.Size = new System.Drawing.Size(33, 23);
             this.DLLBrowseBtn.TabIndex = 6;
             this.DLLBrowseBtn.Text = "...";
+            this.ToolTip.SetToolTip(this.DLLBrowseBtn, "Open a file dialog and select the DLL you wish to\r\nuse for the injection process." +
+        "");
             this.DLLBrowseBtn.UseVisualStyleBackColor = true;
             this.DLLBrowseBtn.Click += new System.EventHandler(this.DLLBrowseBtn_Click);
             // 
@@ -112,6 +115,7 @@
             this.InjectBtn.Size = new System.Drawing.Size(101, 23);
             this.InjectBtn.TabIndex = 8;
             this.InjectBtn.Text = "Inject";
+            this.ToolTip.SetToolTip(this.InjectBtn, resources.GetString("InjectBtn.ToolTip"));
             this.InjectBtn.UseVisualStyleBackColor = true;
             this.InjectBtn.Click += new System.EventHandler(this.InjectBtn_Click);
             // 
@@ -164,6 +168,7 @@
             this.BrowseProcessBtn.Size = new System.Drawing.Size(33, 23);
             this.BrowseProcessBtn.TabIndex = 7;
             this.BrowseProcessBtn.Text = "Set";
+            this.ToolTip.SetToolTip(this.BrowseProcessBtn, "Specify the process you wish to inject.");
             this.BrowseProcessBtn.UseVisualStyleBackColor = true;
             this.BrowseProcessBtn.Click += new System.EventHandler(this.BrowseProcessBtn_Click);
             // 
@@ -171,6 +176,10 @@
             // 
             this.AutoShutdown.Interval = 1000;
             this.AutoShutdown.Tick += new System.EventHandler(this.AutoShutdown_Tick);
+            // 
+            // ToolTip
+            // 
+            this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // Mainform
             // 
@@ -218,6 +227,7 @@
         private System.Windows.Forms.Timer AutoInjectTimer;
         private System.Windows.Forms.Button BrowseProcessBtn;
         private System.Windows.Forms.Timer AutoShutdown;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }
 
