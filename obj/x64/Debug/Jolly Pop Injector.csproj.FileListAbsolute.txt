@@ -7,3 +7,4 @@ C:\Users\Austin\Source\Repos\Jolly-Pop-Injector\Jolly Pop Injector\obj\x64\Debug
 C:\Users\Austin\Source\Repos\Jolly-Pop-Injector\Jolly Pop Injector\obj\x64\Debug\Jolly Pop Injector.csproj.GenerateResource.Cache
 C:\Users\Austin\Source\Repos\Jolly-Pop-Injector\Jolly Pop Injector\obj\x64\Debug\Jolly Pop Injector.exe
 C:\Users\Austin\Source\Repos\Jolly-Pop-Injector\Jolly Pop Injector\obj\x64\Debug\Jolly Pop Injector.pdb
+C:\Users\Austin\Source\Repos\Jolly-Pop-Injector\Jolly Pop Injector\obj\x64\Debug\Jolly Pop Injector.csprojResolveAssemblyReference.cache
