@@ -79,6 +79,11 @@ namespace Jolly_Pop_Injector
                 {
                     MessageBox.Show("Failed to inject the process: The handle is invalid. ");
                 }
+                //idk those are the two most likely ones to happen
+                else
+                {
+                    MessageBox.Show("Failed to inject the process. Error code: " + return_value.ToString()); // :<
+                }
             }
         }
 
