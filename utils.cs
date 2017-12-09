@@ -90,7 +90,7 @@ namespace Jolly_Pop_Injector
             }
         }
 
-        public static void Inject(SettingsHandler settings, Timer AutoShutdownTimer, int shutdown_countdown_var)
+        public static void Inject(SettingsHandler settings, Timer AutoShutdownTimer, int shutdown_countdown_var, int caller)
         {
             int return_value = DLLInjector.InjectDLL(settings.Process, settings.DLL);
             if (return_value != 1)
@@ -111,7 +111,7 @@ namespace Jolly_Pop_Injector
             }
             else
             {
-                if (settings.CloseAfterInjection == 1)
+                if (settings.CloseAfterInjection == 1 && caller == 1)
                 {
                     shutdown_countdown_var = 6; //Set the countdown var to 0, just incase it has been used before.
                     AutoShutdownTimer.Enabled = true; //After 3 seconds, the timer's tick() gets called, causing Application.Exit() to be called.

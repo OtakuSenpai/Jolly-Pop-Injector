@@ -46,6 +46,7 @@ namespace Jolly_Pop_Injector
             {
                 DLLPathTextBox.Text = settings.DLL;
             }
+            MessageBox.Show(settings.AutoCloseWarning.ToString());
         }
 
         public void OnProcessExit(object sender, EventArgs e)
@@ -71,7 +72,7 @@ namespace Jolly_Pop_Injector
 
         private void InjectBtn_Click(object sender, EventArgs e)
         {
-            utils.Inject(settings, AutoShutdown, shutdown_countdown);
+            utils.Inject(settings, AutoShutdown, shutdown_countdown, 0);
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -149,7 +150,7 @@ namespace Jolly_Pop_Injector
                 if (last_auto_injected_process != settings.Process)
                 {
                     last_auto_injected_process = settings.Process;
-                    utils.Inject(settings, AutoShutdown, shutdown_countdown);
+                    utils.Inject(settings, AutoShutdown, shutdown_countdown, 1);
                 }
                 //If the currently selected process has already been auto-injected, then don't inject it a million other times
                 //with each tick. :p
