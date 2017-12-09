@@ -32,8 +32,8 @@
             this.CloseBtn = new System.Windows.Forms.Button();
             this.SilentStartCheckbox = new System.Windows.Forms.CheckBox();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
             this.ShowWarningCheckbox = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // AutoInjectCheckbox
@@ -54,9 +54,9 @@
             this.CloseAfterInjectionCheckbox.AutoSize = true;
             this.CloseAfterInjectionCheckbox.Location = new System.Drawing.Point(15, 52);
             this.CloseAfterInjectionCheckbox.Name = "CloseAfterInjectionCheckbox";
-            this.CloseAfterInjectionCheckbox.Size = new System.Drawing.Size(120, 17);
+            this.CloseAfterInjectionCheckbox.Size = new System.Drawing.Size(145, 17);
             this.CloseAfterInjectionCheckbox.TabIndex = 2;
-            this.CloseAfterInjectionCheckbox.Text = "Close After Injection";
+            this.CloseAfterInjectionCheckbox.Text = "Close After Auto Injection";
             this.ToolTip.SetToolTip(this.CloseAfterInjectionCheckbox, resources.GetString("CloseAfterInjectionCheckbox.ToolTip"));
             this.CloseAfterInjectionCheckbox.UseVisualStyleBackColor = true;
             this.CloseAfterInjectionCheckbox.CheckedChanged += new System.EventHandler(this.CloseAfterInjectionCheckbox_CheckedChanged);
@@ -115,15 +115,6 @@
             // 
             this.ToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(159, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Mouse over the options for help.";
-            // 
             // ShowWarningCheckbox
             // 
             this.ShowWarningCheckbox.AutoSize = true;
@@ -136,6 +127,15 @@
         "DO NOTE: This will prevent you from canceling \r\nthe auto shutdown.");
             this.ShowWarningCheckbox.UseVisualStyleBackColor = true;
             this.ShowWarningCheckbox.CheckedChanged += new System.EventHandler(this.ShowWarningCheckbox_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(159, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Mouse over the options for help.";
             // 
             // SettingsForm
             // 

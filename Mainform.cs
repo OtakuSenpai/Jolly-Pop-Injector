@@ -46,11 +46,18 @@ namespace Jolly_Pop_Injector
             {
                 DLLPathTextBox.Text = settings.DLL;
             }
-            MessageBox.Show(settings.AutoCloseWarning.ToString());
         }
 
         public void OnProcessExit(object sender, EventArgs e)
         {
+            if (settings.SaveDLLlocation == 0)
+            {
+                settings.DLL = "Not set";
+            }
+            if (settings.SaveProcessName == 0)
+            {
+                settings.Process = "Not set";
+            }
             utils.SaveSettings(settings, 1);
         }
 
@@ -66,8 +73,7 @@ namespace Jolly_Pop_Injector
 
         private void ExitBtn_Click(object sender, EventArgs e)
         {
-            utils.SaveSettings(settings, 1);
-            Application.Exit();
+            utils.Exit(1, settings);
         }
 
         private void InjectBtn_Click(object sender, EventArgs e)
@@ -166,7 +172,7 @@ namespace Jolly_Pop_Injector
             StatusLabel.BackColor = Color.DarkRed;
             if (shutdown_countdown == 0)
             {
-                Application.Exit();
+                utils.Exit(1, settings);
             }
         }
     }

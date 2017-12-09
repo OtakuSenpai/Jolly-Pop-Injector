@@ -76,11 +76,11 @@ namespace Jolly_Pop_Injector
             int save_settings = XMLHandler.Serialize_Settings(settings); //Return 1 for success, 0 on unauthorized access exception.
             if (context == 1 && save_settings != 1)
             {
-                if (settings.SaveDLLlocation == 1)
+                if (settings.SaveDLLlocation == 0)
                 {
                     settings.DLL = "Not set";
                 }
-                if (settings.SaveProcessName == 1)
+                if (settings.SaveProcessName == 0)
                 {
                     settings.Process = "Not set";
                 }
@@ -132,6 +132,19 @@ namespace Jolly_Pop_Injector
                     MessageBox.Show("Successfully injected the process.");
                 }
             }
+        }
+        public static void Exit(int context, SettingsHandler settings)
+        {
+            if (settings.SaveDLLlocation == 0)
+            {
+                settings.DLL = "Not set";
+            }
+            if (settings.SaveProcessName == 0)
+            {
+                settings.Process = "Not set";
+            }
+            SaveSettings(settings, context);
+            Application.Exit();
         }
     }
 }
