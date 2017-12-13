@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Jolly_Pop_Injector
@@ -25,9 +27,9 @@ namespace Jolly_Pop_Injector
         {
             try
             {
-                XmlSerializer SerializerObj = new XmlSerializer(typeof(SettingsHandler));
-                TextWriter WriteFileStream = new StreamWriter(@XMLPath);
-                SerializerObj.Serialize(WriteFileStream, settings);
+                DataContractSerializer SerializerObj = new DataContractSerializer(typeof(SettingsHandler));
+                XmlWriter WriteFileStream = XmlWriter.Create(XMLPath);
+                SerializerObj.WriteObject(WriteFileStream, settings);
                 WriteFileStream.Close();
                 return 1; //Success
             }
@@ -41,12 +43,12 @@ namespace Jolly_Pop_Injector
         {
             if (XMLExists())
             {
-                XmlSerializer SerializerObj = new XmlSerializer(typeof(SettingsHandler));
+                DataContractSerializer SerializerObj = new DataContractSerializer(typeof(SettingsHandler));
                 SettingsHandler settings_loaded;
                 FileStream ReadFileStream = new FileStream(@XMLPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                 try
                 {
-                    settings_loaded = (SettingsHandler)SerializerObj.Deserialize(ReadFileStream);
+                    settings_loaded = (SettingsHandler)SerializerObj.ReadObject(ReadFileStream);
                 }
                 catch (InvalidOperationException) //Seems to occur if the xml file for some reason has been screwed up.
                 {

@@ -52,17 +52,31 @@ namespace Jolly_Pop_Injector
             }
             else
             {
-                settings.AutoInject = loaded_settings.AutoInject;
-                settings.CloseAfterInjection = loaded_settings.CloseAfterInjection;
-                settings.DLL = loaded_settings.DLL;
-                settings.Process = loaded_settings.Process;
-                settings.SaveDLLlocation = loaded_settings.SaveDLLlocation;
-                settings.SaveProcessName = loaded_settings.SaveProcessName;
-                settings.SilentStart = loaded_settings.SilentStart;
-                settings.AutoCloseWarning = loaded_settings.AutoCloseWarning;
-                if (settings.SilentStart == 0)
+                try
                 {
-                    MessageBox.Show("Successfully loaded the XML file.");
+                    settings.AutoInject = loaded_settings.AutoInject;
+                    settings.CloseAfterInjection = loaded_settings.CloseAfterInjection;
+                    settings.Dll = loaded_settings.Dll;
+                    settings.Process = loaded_settings.Process;
+                    settings.SaveDll = loaded_settings.SaveDll;
+                    settings.SaveProcessName = loaded_settings.SaveProcessName;
+                    settings.SilentStart = loaded_settings.SilentStart;
+                    settings.AutoCloseWarning = loaded_settings.AutoCloseWarning;
+                    if (settings.SilentStart == 0)
+                    {
+                        MessageBox.Show("Successfully loaded the XML file.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex is ArgumentOutOfRangeException)
+                    {
+                        MessageBox.Show("An error occurred whilst loading the settings file: One or more values were not set correctly. Did you manually edit the file? These settings have been set to their defaults.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("An error occurred whilst loading the settings file: Unspecified error. Possible malformation of config file. Settings that failed to load have been set back to their defaults.");
+                    }
                 }
             }
         }
@@ -76,9 +90,9 @@ namespace Jolly_Pop_Injector
             int save_settings = XMLHandler.Serialize_Settings(settings); //Return 1 for success, 0 on unauthorized access exception.
             if (context == 1 && save_settings != 1)
             {
-                if (settings.SaveDLLlocation == 0)
+                if (settings.SaveDll == 0)
                 {
-                    settings.DLL = "Not set";
+                    settings.Dll = "Not set";
                 }
                 if (settings.SaveProcessName == 0)
                 {
@@ -94,7 +108,7 @@ namespace Jolly_Pop_Injector
 
         public static void Inject(SettingsHandler settings, Timer AutoShutdownTimer, int shutdown_countdown_var, int caller)
         {
-            int return_value = DLLInjector.InjectDLL(settings.Process, settings.DLL);
+            int return_value = DLLInjector.InjectDLL(settings.Process, settings.Dll);
             if (return_value != 1)
             {
                 if (return_value == 5)
@@ -135,9 +149,9 @@ namespace Jolly_Pop_Injector
         }
         public static void Exit(int context, SettingsHandler settings)
         {
-            if (settings.SaveDLLlocation == 0)
+            if (settings.SaveDll == 0)
             {
-                settings.DLL = "Not set";
+                settings.Dll = "Not set";
             }
             if (settings.SaveProcessName == 0)
             {

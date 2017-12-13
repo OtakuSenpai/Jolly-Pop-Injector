@@ -42,17 +42,17 @@ namespace Jolly_Pop_Injector
             {
                 ProcessTextbox.Text = settings.Process;
             }
-            if (settings.SaveDLLlocation == 1 && settings.DLL != "Not set")
+            if (settings.SaveDll == 1 && settings.Dll != "Not set")
             {
-                DLLPathTextBox.Text = settings.DLL;
+                DLLPathTextBox.Text = settings.Dll;
             }
         }
 
         public void OnProcessExit(object sender, EventArgs e)
         {
-            if (settings.SaveDLLlocation == 0)
+            if (settings.SaveDll == 0)
             {
-                settings.DLL = "Not set";
+                settings.Dll = "Not set";
             }
             if (settings.SaveProcessName == 0)
             {
@@ -94,7 +94,7 @@ namespace Jolly_Pop_Injector
             if (browse_dll.ShowDialog() == DialogResult.OK)
             {
                 DLLPathTextBox.Text = browse_dll.FileName;
-                settings.DLL = browse_dll.FileName;
+                settings.Dll = browse_dll.FileName;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Jolly_Pop_Injector
             if (!AutoShutdown.Enabled)
             {
                 StatusLabel.BackColor = SystemColors.Control;
-                if (settings.DLL == "Not set" || settings.Process == "Not set")
+                if (settings.Dll == "Not set" || settings.Process == "Not set")
                 {
                     StatusLabel.Text = "Waiting for a DLL/Process.";
                     StatusLabel.ForeColor = Color.Red;
@@ -133,7 +133,7 @@ namespace Jolly_Pop_Injector
                     StatusLabel.ForeColor = Color.Red;
                     InjectBtn.Enabled = false;
                 }
-                else if (!File.Exists(settings.DLL))
+                else if (!File.Exists(settings.Dll))
                 {
                     StatusLabel.Text = "I can't find the DLL.";
                     StatusLabel.ForeColor = Color.Red;

@@ -26,7 +26,7 @@ namespace Jolly_Pop_Injector
             {
                 CloseAfterInjectionCheckbox.Checked = true;
             }
-            if (settings.SaveDLLlocation == 1)
+            if (settings.SaveDll == 1)
             {
                 SaveDLLCheckbox.Checked = true;
             }
@@ -82,11 +82,11 @@ namespace Jolly_Pop_Injector
         {
             if (SaveDLLCheckbox.Checked)
             {
-                settings.SaveDLLlocation = 1;
+                settings.SaveDll = 1;
             }
             else
             {
-                settings.SaveDLLlocation = 0;
+                settings.SaveDll = 0;
             }
         }
 
