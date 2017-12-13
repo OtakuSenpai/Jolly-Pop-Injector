@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
@@ -15,70 +9,71 @@ namespace Jolly_Pop_Injector
     public partial class Mainform : Form
     {
 
-        public SettingsHandler settings = new SettingsHandler();
-        public XMLHandler xmlhandler = new XMLHandler(Application.StartupPath + "/JPI.xml");
-        public SettingsForm settingsform;
+        public SettingsHandler Settings = new SettingsHandler();
+        public XmlHandler XmlHandler = new XmlHandler(Application.StartupPath + "/JPI.xml");
+        public SettingsForm SettingsForm;
 
         public Mainform()
         {
             InitializeComponent();
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+            AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
         }
 
         private void Mainform_Load(object sender, EventArgs e)
         {
-            utils.LoadSettings(settings, 2);
-            string window_title = "Jolly-Pop Injector: It's a DLL Injector";
-            if (!utils.IsAdministrator())
+            Utils.LoadSettings(Settings, 2);
+            string windowTitle = "Jolly-Pop Injector: It's a DLL Injector";
+            const string adminWarning = "Warning - You must run this tool as an administrator in order for it to work properly.";
+            if (!Utils.IsAdministrator())
             { //Gripe at the user if they're not an admin.
-                window_title += " -NOT ADMIN-";
-                if (settings.SilentStart == 0)
+                windowTitle += " -NOT ADMIN-";
+                if (Settings.SilentStart == 0)
                 {
-                    MessageBox.Show("Warning - You must run this tool as an administrator in order for it to work properly.");
+                    MessageBox.Show(adminWarning);
                 }
             }
-            this.Text = window_title;
-            if (settings.SaveProcessName == 1 && settings.Process != "Not set")
+            Text = windowTitle;
+            if (Settings.SaveProcessName == 1 && Settings.Process != "Not set")
             {
-                ProcessTextbox.Text = settings.Process;
+                ProcessTextbox.Text = Settings.Process;
             }
-            if (settings.SaveDll == 1 && settings.Dll != "Not set")
+            if (Settings.SaveDll == 1 && Settings.Dll != "Not set")
             {
-                DLLPathTextBox.Text = settings.Dll;
+                DLLPathTextBox.Text = Settings.Dll;
             }
         }
 
         public void OnProcessExit(object sender, EventArgs e)
         {
-            if (settings.SaveDll == 0)
+            if (Settings.SaveDll == 0)
             {
-                settings.Dll = "Not set";
+                Settings.Dll = "Not set";
             }
-            if (settings.SaveProcessName == 0)
+            if (Settings.SaveProcessName == 0)
             {
-                settings.Process = "Not set";
+                Settings.Process = "Not set";
             }
-            utils.SaveSettings(settings, 1);
+            Utils.SaveSettings(Settings, 1);
         }
 
         private void SettingsBtn_Click(object sender, EventArgs e)
         {
-            if (FormHandler.formopen(settingsform))
+            if (FormHandler.Formopen(SettingsForm))
             {
-                settingsform.Dispose();
+                SettingsForm.Dispose();
             }
-            settingsform = new SettingsForm(settings);
-            settingsform.Show();
+            SettingsForm = new SettingsForm(Settings);
+            SettingsForm.Show();
         }
 
         private void ExitBtn_Click(object sender, EventArgs e)
         {
-            utils.Exit(1, settings);
+            Utils.Exit(1, Settings);
         }
 
         private void InjectBtn_Click(object sender, EventArgs e)
         {
-            utils.Inject(settings, AutoShutdown, shutdown_countdown, 0);
+            Utils.Inject(Settings, AutoShutdown, shutdown_countdown, 0);
         }
 
         private void GithubLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -88,75 +83,85 @@ namespace Jolly_Pop_Injector
 
         private void DLLBrowseBtn_Click(object sender, EventArgs e)
         {
-            OpenFileDialog browse_dll = new OpenFileDialog();
-            browse_dll.Filter = "DLL Files|*.dll";
-            browse_dll.Title = "Select the DLL to inject.";
-            if (browse_dll.ShowDialog() == DialogResult.OK)
+            OpenFileDialog browseDll = new OpenFileDialog();
+            browseDll.Filter = "DLL Files|*.dll";
+            browseDll.Title = "Select the DLL to inject.";
+            if (browseDll.ShowDialog() == DialogResult.OK)
             {
-                DLLPathTextBox.Text = browse_dll.FileName;
-                settings.Dll = browse_dll.FileName;
+                DLLPathTextBox.Text = browseDll.FileName;
+                Settings.Dll = browseDll.FileName;
             }
         }
 
         private void BrowseProcessBtn_Click(object sender, EventArgs e)
         {
-            string process_name = ProcessTextbox.Text;
-            if (ProcessHandler.ProcessIsRunning(process_name))
+            string processName = ProcessTextbox.Text;
+            string dialogResult;
+            if (ProcessHandler.ProcessIsRunning(processName))
             {
-                if (process_name.Contains(".exe"))
+                if (processName.Contains(".exe"))
                 {
-                    process_name = process_name.Substring(0, process_name.Length - 4); //Strip it out
+                    processName = processName.Substring(0, processName.Length - 4); //Strip it out
                 }
-                settings.Process = process_name;
-                MessageBox.Show("Process found.");
+                Settings.Process = processName;
+                dialogResult = "Process found.";
             }
             else
             {
-                MessageBox.Show("I did not find that process.");
+                dialogResult = "I did not find that process.";
             }
+            MessageBox.Show(dialogResult);
         }
 
-        private void StatusTimer_Tick(object sender, EventArgs e) //lol this can probably be shortened
+        private void StatusTimer_Tick(object sender, EventArgs e)
         {
             if (!AutoShutdown.Enabled)
             {
                 StatusLabel.BackColor = SystemColors.Control;
-                if (settings.Dll == "Not set" || settings.Process == "Not set")
+                string status;
+                bool disabled = true;
+
+                if (Settings.Dll == "Not set" || Settings.Process == "Not set")
                 {
-                    StatusLabel.Text = "Waiting for a DLL/Process.";
-                    StatusLabel.ForeColor = Color.Red;
-                    InjectBtn.Enabled = false;
+                    status = "Waiting for a DLL/Process.";
                 }
-                else if (!ProcessHandler.ProcessIsRunning(settings.Process))
+                else if (!ProcessHandler.ProcessIsRunning(Settings.Process))
                 {
-                    StatusLabel.Text = "I can't find the process.";
-                    StatusLabel.ForeColor = Color.Red;
-                    InjectBtn.Enabled = false;
+                    status = "I can't find the process.";
                 }
-                else if (!File.Exists(settings.Dll))
+                else if (!File.Exists(Settings.Dll))
                 {
-                    StatusLabel.Text = "I can't find the DLL.";
+                    status = "I can't find the DLL.";
+                }
+                else
+                {
+                    status = "Ready to inject the process: " + Settings.Process.ToUpper();
+                    disabled = false;
+                }
+
+                if (disabled)
+                {
                     StatusLabel.ForeColor = Color.Red;
                     InjectBtn.Enabled = false;
                 }
                 else
                 {
-                    StatusLabel.Text = "Ready to inject the process: " + settings.Process.ToUpper();
                     StatusLabel.ForeColor = Color.Green;
                     InjectBtn.Enabled = true;
                 }
+                StatusLabel.Text = status;
             }
         }
 
-        private string last_auto_injected_process = null;
+        private string _lastAutoInjectedProcess;
         private void AutoInjectTimer_Tick(object sender, EventArgs e)
         {
-            if (InjectBtn.Enabled && settings.AutoInject == 1) //If the inject button is enabled then obviously all the above checks passed.
+            if (InjectBtn.Enabled && Settings.AutoInject == 1) //If the inject button is enabled then obviously all the above checks passed.
             { //So go ahead and do whatever.
-                if (last_auto_injected_process != settings.Process)
+                if (_lastAutoInjectedProcess != Settings.Process)
                 {
-                    last_auto_injected_process = settings.Process;
-                    utils.Inject(settings, AutoShutdown, shutdown_countdown, 1);
+                    _lastAutoInjectedProcess = Settings.Process;
+                    Utils.Inject(Settings, AutoShutdown, shutdown_countdown, 1);
                 }
                 //If the currently selected process has already been auto-injected, then don't inject it a million other times
                 //with each tick. :p
@@ -172,7 +177,7 @@ namespace Jolly_Pop_Injector
             StatusLabel.BackColor = Color.DarkRed;
             if (shutdown_countdown == 0)
             {
-                utils.Exit(1, settings);
+                Utils.Exit(1, Settings);
             }
         }
     }

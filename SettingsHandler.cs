@@ -39,7 +39,7 @@ namespace Jolly_Pop_Injector
             {
                 if (value == 0 || value == 1)
                 {
-                    _autoInject = value;
+                    _closeAfterInjection = value;
                 }
                 else
                 {

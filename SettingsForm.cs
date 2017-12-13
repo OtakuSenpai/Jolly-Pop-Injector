@@ -1,44 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Jolly_Pop_Injector
 {
     public partial class SettingsForm : Form
     {
-        public SettingsHandler settings;
+        public SettingsHandler Settings;
         public SettingsForm(SettingsHandler s)
         {
             InitializeComponent();
-            settings = s;
+            Settings = s;
 
-            if (settings.AutoInject == 1)
+            if (Settings.AutoInject == 1)
             {
                 AutoInjectCheckbox.Checked = true;
             }
-            if (settings.CloseAfterInjection == 1)
+            if (Settings.CloseAfterInjection == 1)
             {
                 CloseAfterInjectionCheckbox.Checked = true;
             }
-            if (settings.SaveDll == 1)
+            if (Settings.SaveDll == 1)
             {
                 SaveDLLCheckbox.Checked = true;
             }
-            if (settings.SaveProcessName == 1)
+            if (Settings.SaveProcessName == 1)
             {
                 SaveProcessCheckbox.Checked = true;
             }
-            if (settings.SilentStart == 1)
+            if (Settings.SilentStart == 1)
             {
                 SilentStartCheckbox.Checked = true;
             }
-            if (settings.AutoCloseWarning == 1)
+            if (Settings.AutoCloseWarning == 1)
             {
                 ShowWarningCheckbox.Checked = true;
             }
@@ -51,79 +44,37 @@ namespace Jolly_Pop_Injector
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
-            this.Dispose();
+            Dispose();
         }
 
         private void AutoInjectCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (AutoInjectCheckbox.Checked)
-            {
-                settings.AutoInject = 1;
-            }
-            else
-            {
-                settings.AutoInject = 0;
-            }
+            Settings.AutoInject = AutoInjectCheckbox.Checked ? 1 : 0;
         }
 
         private void CloseAfterInjectionCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (CloseAfterInjectionCheckbox.Checked)
-            {
-                settings.CloseAfterInjection = 1;
-            }
-            else
-            {
-                settings.CloseAfterInjection = 0;
-            }
+            Settings.CloseAfterInjection = CloseAfterInjectionCheckbox.Checked ? 1 : 0;
         }
 
         private void SaveDLLCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (SaveDLLCheckbox.Checked)
-            {
-                settings.SaveDll = 1;
-            }
-            else
-            {
-                settings.SaveDll = 0;
-            }
+            Settings.SaveDll = SaveDLLCheckbox.Checked ? 1 : 0;
         }
 
         private void SaveProcessCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (SaveProcessCheckbox.Checked)
-            {
-                settings.SaveProcessName = 1;
-            }
-            else
-            {
-                settings.SaveProcessName = 0;
-            }
+            Settings.SaveProcessName = SaveProcessCheckbox.Checked ? 1 : 0;
         }
 
         private void SilentStartCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (SilentStartCheckbox.Checked)
-            {
-                settings.SilentStart = 1;
-            }
-            else
-            {
-                settings.SilentStart = 0;
-            }
+            Settings.SilentStart = SilentStartCheckbox.Checked ? 1 : 0;
         }
 
         private void ShowWarningCheckbox_CheckedChanged(object sender, EventArgs e)
         {
-            if (ShowWarningCheckbox.Checked)
-            {
-                settings.AutoCloseWarning = 1;
-            }
-            else
-            {
-                settings.AutoCloseWarning = 0;
-            }
+            Settings.AutoCloseWarning = ShowWarningCheckbox.Checked ? 1 : 0;
         }
     }
 }

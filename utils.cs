@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Jolly_Pop_Injector
 {
-    public static class utils
+    public static class Utils
     {
         public static bool IsAdministrator()
         { //Detects if the user is admin or not (dur)
@@ -15,35 +15,39 @@ namespace Jolly_Pop_Injector
 
         public static void LoadSettings(SettingsHandler settings, int context) //Pass the context so if I need to call SerializeSettings, I will have something to pass it.
         { //For loading settings from the XML file.
-            SettingsHandler loaded_settings = XMLHandler.DeSerialize_Settings();
-            if (loaded_settings == null)
+            SettingsHandler loadedSettings = XmlHandler.DeSerialize_Settings();
+            if (loadedSettings == null)
             {
-                if (!XMLHandler.XMLExists())
+                string dialogResult;
+                if (!XmlHandler.XmlExists())
                 {
                     if (settings.SilentStart == 0)
                     {
-                        MessageBox.Show("I did not find an XML config file. A new one will be generated with default values.");
+                        dialogResult = "I did not find an XML config file. A new one will be generated with default values.";
+                        MessageBox.Show(dialogResult);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("An XML config file was found, but I failed to load it properly. It is possible it is damaged. A new one will be generated.");
-                    FileInfo fi = new FileInfo(XMLHandler.XMLPath);
+                    dialogResult = "An XML config file was found, but I failed to load it properly. It is possible it is damaged. A new one will be generated.";
+                    MessageBox.Show(dialogResult);
+                    FileInfo fi = new FileInfo(XmlHandler.XmlPath);
                     if (fi.IsReadOnly && IsAdministrator()) //If the file is readonly for some reason, that will cause an unauthorizedaccessexception.
                     {
-                        File.SetAttributes(XMLHandler.XMLPath, File.GetAttributes(XMLHandler.XMLPath) & ~FileAttributes.ReadOnly); //So make it not readonly.
+                        File.SetAttributes(XmlHandler.XmlPath, File.GetAttributes(XmlHandler.XmlPath) & ~FileAttributes.ReadOnly); //So make it not readonly.
                         //Since the application must be run as admin in order to set attributes, I check for that.
                     }
                     try
                     {
-                        File.Delete(XMLHandler.XMLPath);
+                        File.Delete(XmlHandler.XmlPath);
                     }
                     catch (UnauthorizedAccessException)
                     {
-                        string err_text = "An error occurred whilst attempting to delete the corrupt config file. ";
+                        const string errText = "An error occurred whilst attempting to delete the corrupt config file. ";
                         if (!IsAdministrator()) //If the user isn't an administrator, then the file might be set to readonly.
                         {
-                            MessageBox.Show(err_text + "You are not running as administrator, so it's possible I do not have permission to access the file. Please re-run the tool as admin.");
+                            dialogResult = "You are not running as administrator, so it's possible I do not have permission to access the file. Please re-run the tool as admin.";
+                            MessageBox.Show(errText + dialogResult);
                             Application.Exit(); //Exit the tool so the user can re-run as admin. Really not much else I can do.
                         }
                     }
@@ -52,31 +56,34 @@ namespace Jolly_Pop_Injector
             }
             else
             {
+                string dialogResult;
                 try
                 {
-                    settings.AutoInject = loaded_settings.AutoInject;
-                    settings.CloseAfterInjection = loaded_settings.CloseAfterInjection;
-                    settings.Dll = loaded_settings.Dll;
-                    settings.Process = loaded_settings.Process;
-                    settings.SaveDll = loaded_settings.SaveDll;
-                    settings.SaveProcessName = loaded_settings.SaveProcessName;
-                    settings.SilentStart = loaded_settings.SilentStart;
-                    settings.AutoCloseWarning = loaded_settings.AutoCloseWarning;
+                    settings.AutoInject = loadedSettings.AutoInject;
+                    settings.CloseAfterInjection = loadedSettings.CloseAfterInjection;
+                    settings.Dll = loadedSettings.Dll;
+                    settings.Process = loadedSettings.Process;
+                    settings.SaveDll = loadedSettings.SaveDll;
+                    settings.SaveProcessName = loadedSettings.SaveProcessName;
+                    settings.SilentStart = loadedSettings.SilentStart;
+                    settings.AutoCloseWarning = loadedSettings.AutoCloseWarning;
                     if (settings.SilentStart == 0)
                     {
-                        MessageBox.Show("Successfully loaded the XML file.");
+                        dialogResult = "Successfully loaded the XML file.";
+                        MessageBox.Show(dialogResult);
                     }
                 }
                 catch (Exception ex)
                 {
                     if (ex is ArgumentOutOfRangeException)
                     {
-                        MessageBox.Show("An error occurred whilst loading the settings file: One or more values were not set correctly. Did you manually edit the file? These settings have been set to their defaults.");
+                        dialogResult = "An error occurred whilst loading the settings file: One or more values were not set correctly. Did you manually edit the file? These settings have been set to their defaults.";
                     }
                     else
                     {
-                        MessageBox.Show("An error occurred whilst loading the settings file: Unspecified error. Possible malformation of config file. Settings that failed to load have been set back to their defaults.");
+                        dialogResult = "An error occurred whilst loading the settings file: Unspecified error. Possible malformation of config file. Settings that failed to load have been set back to their defaults.";
                     }
+                    MessageBox.Show(dialogResult);
                 }
             }
         }
@@ -87,8 +94,8 @@ namespace Jolly_Pop_Injector
         */
         public static void SaveSettings(SettingsHandler settings, int context)
         { //For saving settings to the XML file.
-            int save_settings = XMLHandler.Serialize_Settings(settings); //Return 1 for success, 0 on unauthorized access exception.
-            if (context == 1 && save_settings != 1)
+            int saveSettings = XmlHandler.Serialize_Settings(settings); //Return 1 for success, 0 on unauthorized access exception.
+            if (context == 1 && saveSettings != 1)
             {
                 if (settings.SaveDll == 0)
                 {
@@ -98,52 +105,57 @@ namespace Jolly_Pop_Injector
                 {
                     settings.Process = "Not set";
                 }
-                save_settings = XMLHandler.Serialize_Settings(settings); //If an exception occurs, ignore it and exit.
+                XmlHandler.Serialize_Settings(settings); //If an exception occurs, ignore it and exit.
             }
-            else if (context == 2 && save_settings != 1)
+            else if (context == 2 && saveSettings != 1)
             {
-                MessageBox.Show("An access violation occurred whilst generating a new configuration file. Are you running as admin?");
+                const string dialogResult = "An access violation occurred whilst generating a new configuration file. Are you running as admin?";
+                MessageBox.Show(dialogResult);
             }
         }
 
-        public static void Inject(SettingsHandler settings, Timer AutoShutdownTimer, int shutdown_countdown_var, int caller)
+        public static void Inject(SettingsHandler settings, Timer autoShutdownTimer, int shutdownCountdownVar, int caller)
         {
-            int return_value = DLLInjector.InjectDLL(settings.Process, settings.Dll);
-            if (return_value != 1)
+            int returnValue = DLLInjector.InjectDll(settings.Process, settings.Dll);
+            string dialogResult;
+
+            if (returnValue != 1)
             {
-                if (return_value == 5)
+                if (returnValue == 5)
                 {
-                    MessageBox.Show("Failed to inject the process: An access violation occurred. Are you running as admin?");
+                    dialogResult = "Failed to inject the process: An access violation occurred. Are you running as admin?";
                 }
-                if (return_value == 6)
+                if (returnValue == 6)
                 {
-                    MessageBox.Show("Failed to inject the process: The handle is invalid.");
+                    dialogResult = "Failed to inject the process: Handle invalid.";
                 }
                 //idk those are the two most likely ones to happen
                 else
                 {
-                    MessageBox.Show("Failed to inject the process. Error code: " + return_value.ToString()); // :<
+                    dialogResult = "Failed to inject the process. Error code: " + returnValue.ToString();
                 }
+                MessageBox.Show(dialogResult);
             }
             else
             {
                 if (settings.CloseAfterInjection == 1 && caller == 1)
                 {
-                    shutdown_countdown_var = 6; //Set the countdown var to 0, just incase it has been used before.
-                    AutoShutdownTimer.Enabled = true; //After 3 seconds, the timer's tick() gets called, causing Application.Exit() to be called.
+                    autoShutdownTimer.Enabled = true; //After 3 seconds, the timer's tick() gets called, causing Application.Exit() to be called.
                     if (settings.AutoCloseWarning == 1)
                     {
-                        var result = MessageBox.Show("Successfully injected the process. Close after injection is enabled, so I will close after 5 seconds.", "Auto-Close Enabled", MessageBoxButtons.OKCancel);
+                        dialogResult = "Successfully injected the process. Close after injection is enabled, so I will close after 5 seconds.";
+                        const string dialogTitle = "Auto-Close Enabled";
+                        var result = MessageBox.Show(dialogResult, dialogTitle, MessageBoxButtons.OKCancel);
                         if (result == DialogResult.Cancel) //If the user presses cancel, then... You know, cancel the thing.
                         {
-                            AutoShutdownTimer.Enabled = false;
-                            shutdown_countdown_var = 6;
+                            autoShutdownTimer.Enabled = false;
                         }
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Successfully injected the process.");
+                    dialogResult = "Successfully injected the process.";
+                    MessageBox.Show(dialogResult);
                 }
             }
         }

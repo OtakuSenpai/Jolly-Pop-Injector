@@ -38,26 +38,26 @@ namespace Jolly_Pop_Injector
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern bool CloseHandle(IntPtr hHandle);
 
-        public static int InjectDLL(string target_process_name, string DLLName)
+        public static int InjectDll(string targetProcessName, string dllName)
         {
-            Process[] process = Process.GetProcessesByName(target_process_name);
+            Process[] process = Process.GetProcessesByName(targetProcessName);
 
-            int PID = process[0].Id;
+            int pid = process[0].Id;
 
-            IntPtr process_handle = OpenProcess(PROCESS_WM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, false, PID);
-            IntPtr LoadLibraryAddress = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-            IntPtr AddressToWrite = VirtualAllocEx(process_handle, (IntPtr)null, (IntPtr)DLLName.Length, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-            byte[] bytes = Encoding.ASCII.GetBytes(DLLName);
-            bool wpm = WriteProcessMemory(process_handle, AddressToWrite, bytes, (uint)bytes.Length, 0);
-            IntPtr RemoteThread = CreateRemoteThread(process_handle, (IntPtr)null, IntPtr.Zero, LoadLibraryAddress, AddressToWrite, 0, (IntPtr)null);
+            IntPtr processHandle = OpenProcess(PROCESS_WM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, false, pid);
+            IntPtr loadLibraryAddress = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            IntPtr addressToWrite = VirtualAllocEx(processHandle, (IntPtr)null, (IntPtr)dllName.Length, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+            byte[] bytes = Encoding.ASCII.GetBytes(dllName);
+            bool wpm = WriteProcessMemory(processHandle, addressToWrite, bytes, (uint)bytes.Length, 0);
+            IntPtr remoteThread = CreateRemoteThread(processHandle, (IntPtr)null, IntPtr.Zero, loadLibraryAddress, addressToWrite, 0, (IntPtr)null);
             
-            if (process_handle == (IntPtr)null || LoadLibraryAddress == (IntPtr)null || AddressToWrite == (IntPtr)null || RemoteThread == (IntPtr)null || wpm == false)
+            if (processHandle == (IntPtr)null || loadLibraryAddress == (IntPtr)null || addressToWrite == (IntPtr)null || remoteThread == (IntPtr)null || wpm == false)
             {
-                CloseHandle(process_handle);
+                CloseHandle(processHandle);
                 return Marshal.GetLastWin32Error(); //professional error handle
             }
 
-            CloseHandle(process_handle);
+            CloseHandle(processHandle);
             return 1; //success :^)
         }
     }
