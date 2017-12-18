@@ -119,7 +119,7 @@ namespace Jolly_Pop_Injector
             int returnValue = DLLInjector.InjectDll(settings.Process, settings.Dll);
             string dialogResult;
 
-            if (returnValue != 1)
+            if (returnValue != 0)
             {
                 if (returnValue == 5)
                 {

@@ -2,63 +2,122 @@
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.IO;
+using System.Numerics;
+using System.Reflection;
 
 namespace Jolly_Pop_Injector
 {
     public static class DLLInjector
     {
-        const int PROCESS_WM_READ = 0x0010;
-        const int PROCESS_VM_WRITE = 0x0020;
-        const int PROCESS_VM_OPERATION = 0x0008;
-
-        const uint MEM_COMMIT = 0x00001000;
-        const uint MEM_RESERVE = 0x00002000;
-        const uint PAGE_READWRITE = 4;
+        [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWow64Process([In] IntPtr processHandle,
+        [Out, MarshalAs(UnmanagedType.Bool)] out bool wow64Process);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttribute, IntPtr dwStackSize, IntPtr lpStartAddress,
-            IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
+        public static extern IntPtr OpenProcess(ProcessAccessFlags processAccess, bool bInheritHandle, int processId);
 
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+        public static IntPtr OpenProcess(Process proc, ProcessAccessFlags flags)
+        {
+            return OpenProcess(flags, false, proc.Id);
+        }
 
-        [DllImport("kernel32", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-        static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+        [Flags]
+        public enum ProcessAccessFlags : uint
+        {
+            All = 0x001F0FFF,
+            Terminate = 0x00000001,
+            CreateThread = 0x00000002,
+            VirtualMemoryOperation = 0x00000008,
+            VirtualMemoryRead = 0x00000010,
+            VirtualMemoryWrite = 0x00000020,
+            DuplicateHandle = 0x00000040,
+            CreateProcess = 0x000000080,
+            SetQuota = 0x00000100,
+            SetInformation = 0x00000200,
+            QueryInformation = 0x00000400,
+            QueryLimitedInformation = 0x00001000,
+            Synchronize = 0x00100000
+        }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, IntPtr dwSize, uint flAllocationType, uint flProtect);
+        public static bool IsProcess32Bit(IntPtr processHandle)
+        {
+            bool isWow64 = false;
+            if ((Environment.OSVersion.Version.Major == 5 && Environment.OSVersion.Version.Minor >= 1) || Environment.OSVersion.Version.Major > 5)
+            {
+                bool retVal;
+                IsWow64Process(processHandle, out retVal);
+                isWow64 = retVal;
+            }
+            return isWow64;
+        }
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        static extern IntPtr GetModuleHandle(string lpModuleName);
+        public static int InjectProcess(bool processIs32Bit, int PID, string DLL)
+        {
+            string exeToRun;
+            DLL = DLL.Replace(@"\", "/");
+            string args = string.Format("{0} \"{1}\"", PID.ToString(), DLL);
+            MessageBox.Show(args);
+            byte[] exeBytes;
+            if (processIs32Bit)
+            {
+                exeToRun = Path.Combine(Path.GetTempPath(), "Injector_C++_32Bit.exe");
+                exeBytes = Properties.Resources.Injector_C___32Bit;
+            }
+            else
+            {
+                exeToRun = Path.Combine(Path.GetTempPath(), "Injector_C++_64Bit.exe");
+                exeBytes = Properties.Resources.Injector_C___64Bit;
+            }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, int lpNumberOfBytesWritten);
+            using (FileStream exeFile = new FileStream(exeToRun, FileMode.Create))
+            {
+                exeFile.Write(exeBytes, 0, exeBytes.Length);
+            }
 
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool CloseHandle(IntPtr hHandle);
+            var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = exeToRun,
+                    UseShellExecute = false,
+                    Arguments = args,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true
+                }
+            };
+            proc.Start();
+            proc.WaitForExit();
+
+            File.Delete(exeToRun);
+
+            return proc.ExitCode;
+        }
 
         public static int InjectDll(string targetProcessName, string dllName)
         {
             Process[] process = Process.GetProcessesByName(targetProcessName);
-
             int pid = process[0].Id;
+            IntPtr pHandle = OpenProcess(ProcessAccessFlags.QueryInformation, false, pid);
+            int res;
 
-            IntPtr processHandle = OpenProcess(PROCESS_WM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, false, pid);
-            IntPtr loadLibraryAddress = GetProcAddress(GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-            IntPtr addressToWrite = VirtualAllocEx(processHandle, (IntPtr)null, (IntPtr)dllName.Length, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-            byte[] bytes = Encoding.ASCII.GetBytes(dllName);
-            bool wpm = WriteProcessMemory(processHandle, addressToWrite, bytes, (uint)bytes.Length, 0);
-            IntPtr remoteThread = CreateRemoteThread(processHandle, (IntPtr)null, IntPtr.Zero, loadLibraryAddress, addressToWrite, 0, (IntPtr)null);
-            
-            if (processHandle == (IntPtr)null || loadLibraryAddress == (IntPtr)null || addressToWrite == (IntPtr)null || remoteThread == (IntPtr)null || wpm == false)
+            if (IsProcess32Bit(pHandle))
             {
-                CloseHandle(processHandle);
-                return Marshal.GetLastWin32Error(); //professional error handle
-            }
+                //Process is 32 bit
+                res = InjectProcess(true, pid, dllName);
 
-            CloseHandle(processHandle);
-            return 1; //success :^)
+            }
+            else
+            {
+                //Process is 64 bit
+                res = InjectProcess(false, pid, dllName);
+            }
+            MessageBox.Show(res.ToString());
+            return res;
         }
     }
 }
