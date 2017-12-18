@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.ComponentModel;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using System.IO;
-using System.Numerics;
-using System.Reflection;
 
 namespace Jolly_Pop_Injector
 {
@@ -98,7 +93,7 @@ namespace Jolly_Pop_Injector
             return proc.ExitCode;
         }
 
-        public static int InjectDll(string targetProcessName, string dllName)
+        public static int InjectDll(string targetProcessName, string dllName) //ToDo: detect if selected dll is 32 bit/64 bit and tell the user if the injection will fail or not
         {
             Process[] process = Process.GetProcessesByName(targetProcessName);
             int pid = process[0].Id;
@@ -116,7 +111,7 @@ namespace Jolly_Pop_Injector
                 //Process is 64 bit
                 res = InjectProcess(false, pid, dllName);
             }
-            MessageBox.Show(res.ToString());
+
             return res;
         }
     }
